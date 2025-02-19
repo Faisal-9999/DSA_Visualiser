@@ -1,5 +1,7 @@
 package com.visualiser.dsa_visualiser;
 
+import com.visualiser.data_structures.LinkedList;
+import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
@@ -10,7 +12,7 @@ public class LinkedListController {
 
     private Stage stage;
 
-    private List list = new List();
+    private LinkedList list = new LinkedList();
 
     @FXML
     private void onAddClick() {

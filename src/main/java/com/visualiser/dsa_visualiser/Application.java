@@ -13,10 +13,10 @@ public class Application extends javafx.application.Application {
     //COMPLETED MAIN MENU SCREEN
     //Controller classes for options, choose screen
     //exit button is functioning
+    //COMPLETED LINKED LIST LOGIC
 
-    //TODO: LEARN HOW TO SWITCH SCREENS THEN MAKE IT SO THAT THE OPTIONS AND START BUTTON WORK
     //TODO: OPTIONS MENU WILL BE ADDED AT THE END DONT BOTHER WITH IT JUST FOCUS ON THE CHOOSE SCREEN
-    //TODO: START WORK ON THE LOGIC OF THE LINKED LIST
+    //TODO: Link the LinkedList Controller class with the LinkedList Data structure class and complete the GUI
 
     @Override
     public void start(Stage stage) throws IOException {

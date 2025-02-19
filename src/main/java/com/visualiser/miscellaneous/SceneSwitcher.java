@@ -1,4 +1,4 @@
-package com.visualiser.dsa_visualiser;
+package com.visualiser.miscellaneous;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +9,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.security.Key;
 
 public class SceneSwitcher {
     public static void switch_scene(ActionEvent e, Stage stage, String file_name) throws IOException {

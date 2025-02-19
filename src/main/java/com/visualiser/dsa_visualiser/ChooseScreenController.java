@@ -1,5 +1,6 @@
 package com.visualiser.dsa_visualiser;
 
+import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
