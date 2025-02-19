@@ -15,6 +15,7 @@ public class Application extends javafx.application.Application {
     //exit button is functioning
 
     //TODO: LEARN HOW TO SWITCH SCREENS THEN MAKE IT SO THAT THE OPTIONS AND START BUTTON WORK
+    //TODO: OPTIONS MENU WILL BE ADDED AT THE END DONT BOTHER WITH IT JUST FOCUS ON THE CHOOSE SCREEN
     //TODO: START WORK ON THE LOGIC OF THE LINKED LIST
 
     @Override
