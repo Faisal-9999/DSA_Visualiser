@@ -13,7 +13,7 @@ public class ChooseScreenController {
 
     @FXML
     private void onLinkedListClick(ActionEvent e) throws IOException  {
-        SceneSwitcher.switch_scene(e, stage, "LinkedList.fxml");
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/LinkedList.fxml");
     }
 
     @FXML
@@ -34,5 +34,10 @@ public class ChooseScreenController {
     @FXML
     private void onBSTClick(ActionEvent e) {
 
+    }
+
+    @FXML
+    private void onBackClick(ActionEvent e) throws IOException {
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/main_menu.fxml");
     }
 }

@@ -17,6 +17,8 @@ public class Application extends javafx.application.Application {
 
     //TODO: OPTIONS MENU WILL BE ADDED AT THE END DONT BOTHER WITH IT JUST FOCUS ON THE CHOOSE SCREEN
     //TODO: Link the LinkedList Controller class with the LinkedList Data structure class and complete the GUI
+    //TODO: MAKE THE CHOOSE SCREEN GUI ELEMENTS DYNAMICALLY SIZED
+    //TODO: COMPLETE LINKED LIST WORKING
 
     @Override
     public void start(Stage stage) throws IOException {

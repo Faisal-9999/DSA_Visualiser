@@ -11,5 +11,6 @@
       <Button layoutX="174.0" layoutY="283.0" mnemonicParsing="false" text="Binary Tree" />
       <Button layoutX="200.0" layoutY="89.0" mnemonicParsing="false" text="Binary Search Tree" />
       <Button layoutX="418.0" layoutY="89.0" mnemonicParsing="false" text="Hashmap" />
+      <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" />
    </children>
 </AnchorPane>

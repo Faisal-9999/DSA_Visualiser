@@ -1,14 +1,29 @@
 package com.visualiser.data_structures;
 
+import java.lang.ref.Cleaner;
+
 public class LinkedList {
 
     private class Node {
+
+        private static int position = 1;
+        private static final Cleaner cleaner = Cleaner.create();
+
+        static class State implements Runnable {
+            @Override
+            public void run() {
+                position--;
+            }
+        }
+
         public int value;
         public Node next;
+        public int node_position;
 
         public Node(int value) {
             this.value = value;
             this.next = null;
+            this.node_position = position++;
         }
     }
 

@@ -11,13 +11,12 @@ import java.io.IOException;
 public class MenuController {
 
     @FXML
-    AnchorPane main_screen;
-
-    Stage stage;
+    private AnchorPane main_screen;
+    private Stage stage;
 
     @FXML
     private void onStartClick(ActionEvent e) throws IOException {
-        SceneSwitcher.switch_scene(e, stage, "data_structure_choose_screen.fxml");
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
     }
 
     @FXML
