@@ -1,6 +1,7 @@
 module com.visualiser.dsa_visualiser {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.visualiser.dsa_visualiser to javafx.fxml;

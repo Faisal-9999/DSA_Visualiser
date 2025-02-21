@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SceneSwitcher {
+
     public static void switch_scene(ActionEvent e, Stage stage, String file_name) throws IOException {
         Parent root = FXMLLoader.load(SceneSwitcher.class.getResource(file_name));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();

@@ -1,12 +1,19 @@
 package com.visualiser.dsa_visualiser;
 
-import com.visualiser.data_structures.LinkedList;
 import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.*;
 import javafx.scene.control.TextField;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+
 
 import java.io.IOException;
 
@@ -16,10 +23,17 @@ public class LinkedListController {
 
     private Stage stage;
 
-    private LinkedList list = new LinkedList();
+    private int currX = 100;
+    private int currY = 100;
+    private Boolean right = true;
+
+    private int list_length = 0;
 
     @FXML
-    private Canvas list_canvas;
+    private Pane link_panel;
+
+    //THE PANEL CLASS IS FUCKED YOU USED THE awt one find a way to redo it using the JavaFX panel
+    //TODO: ADD WORKING FOR GRAPHICAL REPRESENTATION OF NODES IN LINKED LIST
 
     @FXML
     private TextField position_field, add_field;
@@ -27,18 +41,40 @@ public class LinkedListController {
     @FXML
     private void onAddClick() throws NumberFormatException {
         int value = parseInt(add_field.getText());
-        list.addNode(value);
-    }
 
-    @FXML
-    private void showList() {
+        Rectangle rectangle = new Rectangle(75, 75);
+        rectangle.setFill(Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
 
+        Text label = new Text(String.valueOf(value));
+        label.setFont(Font.font("Sans", 14));
+
+        StackPane node = new StackPane(rectangle, label);
+
+        node.setLayoutX(currX);
+        node.setLayoutY(currY);
+
+        list_length++;
+
+        if (list_length % 9 == 0) {
+            currY += 125;
+            right = !right;
+        }
+        else {
+            if (right) {
+                currX += 125;
+            }
+            else {
+                currX -= 125;
+            }
+        }
+
+        link_panel.getChildren().add(node);
     }
 
     @FXML
     private void onDeleteClick() throws Exception {
         int value = parseInt(position_field.getText());
-        list.delete(value);
     }
 
     @FXML
