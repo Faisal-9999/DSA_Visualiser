@@ -24,19 +24,19 @@ public class LinkedListController {
     private int currX = 100;
     private int currY = 100;
     private Boolean right = true;
-    private ArrayList<StackPane> nodesList = new ArrayList<>();
+    private final ArrayList<StackPane> nodesList = new ArrayList<>();
 
     private int list_length = 0;
 
     @FXML
     private Pane link_panel;
 
+    //TODO: POLISH GUI
     //TODO: ADD ARROWS BETWEEN NODES
-    //TODO: ADD WORKING FOR OTHER LIST FUNCTIONALITY, DELETE, INSERT, and RESET
     //TODO: ADD WARNING MESSAGE TOO IF THE USER INPUTS MORE THAN THE PANE CAN HOLD
 
     @FXML
-    private TextField position_field, add_field, insert_field;
+    private TextField position_field, add_field, insert_field, insert_value_field;
 
     @FXML
     private void onAddClick() throws NumberFormatException {
@@ -89,7 +89,48 @@ public class LinkedListController {
 
     @FXML
     private void onInsertClick() throws NumberFormatException {
-        int value = parseInt(insert_field.getText());
+        int value = parseInt(insert_value_field.getText());
+        int position = parseInt(insert_field.getText());
+
+        Rectangle rectangle = new Rectangle(75, 75);
+        rectangle.setFill(Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
+        Text label = new Text(String.valueOf(value));
+        label.setFont(Font.font("Sans", 14));
+
+        StackPane node = new StackPane(rectangle, label);
+
+        nodesList.add(position - 1, node);
+
+
+        currX = 100;
+        currY = 100;
+        list_length = 0;
+        right = true;
+
+        link_panel.getChildren().clear();
+
+        for (StackPane linknode : nodesList) {
+            linknode.setLayoutX(currX);
+            linknode.setLayoutY(currY);
+
+            list_length++;
+
+            if (list_length % 9 == 0) {
+                currY += 125;
+                right = !right;
+            }
+            else {
+                if (right) {
+                    currX += 135;
+                }
+                else {
+                    currX -= 135;
+                }
+            }
+
+            link_panel.getChildren().add(linknode);
+        }
     }
 
     @FXML
