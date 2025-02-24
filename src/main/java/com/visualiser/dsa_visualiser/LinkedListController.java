@@ -3,9 +3,7 @@ package com.visualiser.dsa_visualiser;
 import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.*;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -14,8 +12,8 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static java.lang.Integer.parseInt;
 
@@ -26,17 +24,19 @@ public class LinkedListController {
     private int currX = 100;
     private int currY = 100;
     private Boolean right = true;
+    private ArrayList<StackPane> nodesList = new ArrayList<>();
 
     private int list_length = 0;
 
     @FXML
     private Pane link_panel;
 
-    //THE PANEL CLASS IS FUCKED YOU USED THE awt one find a way to redo it using the JavaFX panel
-    //TODO: ADD WORKING FOR GRAPHICAL REPRESENTATION OF NODES IN LINKED LIST
+    //TODO: ADD ARROWS BETWEEN NODES
+    //TODO: ADD WORKING FOR OTHER LIST FUNCTIONALITY, DELETE, INSERT, and RESET
+    //TODO: ADD WARNING MESSAGE TOO IF THE USER INPUTS MORE THAN THE PANE CAN HOLD
 
     @FXML
-    private TextField position_field, add_field;
+    private TextField position_field, add_field, insert_field;
 
     @FXML
     private void onAddClick() throws NumberFormatException {
@@ -56,16 +56,18 @@ public class LinkedListController {
 
         list_length++;
 
+        nodesList.add(node);
+
         if (list_length % 9 == 0) {
             currY += 125;
             right = !right;
         }
         else {
             if (right) {
-                currX += 125;
+                currX += 135;
             }
             else {
-                currX -= 125;
+                currX -= 135;
             }
         }
 
@@ -73,18 +75,26 @@ public class LinkedListController {
     }
 
     @FXML
-    private void onDeleteClick() throws Exception {
+    private void onDeleteClick() throws NumberFormatException {
         int value = parseInt(position_field.getText());
+
+        nodesList.remove(value - 1);
+
+        link_panel.getChildren().clear();
+
+        for (StackPane node : nodesList) {
+            link_panel.getChildren().add(node);
+        }
     }
 
     @FXML
-    private void onInsertClick() {
-
+    private void onInsertClick() throws NumberFormatException {
+        int value = parseInt(insert_field.getText());
     }
 
     @FXML
-    private void onResetClick() {
-
+    private void onResetClick() throws NumberFormatException {
+        link_panel.getChildren().clear();
     }
 
     //CHECK IF BACK BUTTON IS WORKING THEN START WORK ON THE LOGIC OF THE LINKED LIST

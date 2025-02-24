@@ -8,24 +8,30 @@
 
 <AnchorPane prefHeight="514.0" prefWidth="887.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.dsa_visualiser.LinkedListController">
    <children>
-      <Button layoutX="20.0" layoutY="284.0" mnemonicParsing="false" onAction="#onAddClick" prefHeight="34.0" prefWidth="58.0" text="Add" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0">
+      <Button layoutX="64.0" layoutY="399.0" mnemonicParsing="false" onAction="#onAddClick" prefHeight="34.0" prefWidth="58.0" text="Add" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="64.0">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="29.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="10.0" />
-      <Button layoutX="484.0" layoutY="284.0" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="35.0" prefWidth="87.0" text="Delete" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="10.0">
+      <Button layoutX="11.0" layoutY="467.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="11.0" />
+      <Button layoutX="294.0" layoutY="399.0" mnemonicParsing="false" onAction="#onDeleteClick" prefHeight="35.0" prefWidth="87.0" text="Delete" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="506.0">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="484.0" layoutY="351.0" mnemonicParsing="false" onAction="#onResetClick" prefHeight="35.0" prefWidth="87.0" text="Reset" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="10.0">
+      <Button layoutX="787.0" layoutY="462.0" mnemonicParsing="false" onAction="#onResetClick" prefHeight="35.0" prefWidth="87.0" text="Reset" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="13.0">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <TextField fx:id="add_field" layoutX="85.0" layoutY="399.0" prefHeight="35.0" prefWidth="149.0" />
-      <TextField fx:id="position_field" layoutX="623.0" layoutY="399.0" prefHeight="35.0" prefWidth="149.0" />
+      <TextField fx:id="add_field" layoutX="139.0" layoutY="399.0" prefHeight="35.0" prefWidth="68.0" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="680.0" />
+      <TextField fx:id="position_field" layoutX="393.0" layoutY="399.0" prefHeight="35.0" prefWidth="68.0" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="426.0" />
       <Pane fx:id="link_panel" layoutX="11.0" layoutY="13.0" prefHeight="372.0" prefWidth="863.0" />
+      <Button layoutX="573.0" layoutY="399.0" mnemonicParsing="false" onAction="#onInsertClick" prefHeight="35.0" prefWidth="87.0" text="Insert" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="227.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <TextField fx:id="insert_field" layoutX="683.0" layoutY="399.0" prefHeight="35.0" prefWidth="68.0" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="136.0" />
    </children>
 </AnchorPane>
