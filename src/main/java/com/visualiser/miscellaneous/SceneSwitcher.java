@@ -18,6 +18,7 @@ public class SceneSwitcher {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setFullScreenExitHint("");
+        stage.setResizable(true);
         stage.setFullScreen(true);
         stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("esc"));
         stage.show();

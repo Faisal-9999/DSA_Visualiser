@@ -27,7 +27,7 @@ public class Application extends javafx.application.Application {
         stage.setTitle("DSA Visualiser");
         stage.setScene(scene);
         stage.setFullScreen(true);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("esc"));
         stage.setFullScreenExitHint("");
         stage.show();

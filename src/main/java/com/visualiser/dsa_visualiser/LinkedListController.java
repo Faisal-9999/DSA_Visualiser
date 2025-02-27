@@ -200,8 +200,8 @@ public class LinkedListController {
 
         double xA, yA, xB, yB;
 
-        //TODO: FIX THE LOGIC FOR THE LEFT CASE
-        //TODO: SAME FOR RIGHT CASE
+        //FIXED LOGIC FOR THE LEFT CASE
+        //TODO: SAME FOR down CASE
 
         switch (direction) {
             case "right" -> {
@@ -212,7 +212,7 @@ public class LinkedListController {
                 yB = nodeB.getLayoutY() + NODE_HEIGHT / 2;
             }
             case "left" -> {
-                xA = nodeA.getLayoutX() - NODE_WIDTH;
+                xA = nodeA.getLayoutX();
                 yA = nodeA.getLayoutY() + NODE_HEIGHT / 2;
 
                 xB = nodeB.getLayoutX() + NODE_WIDTH;
