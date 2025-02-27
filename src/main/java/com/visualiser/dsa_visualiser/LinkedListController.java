@@ -40,6 +40,7 @@ public class LinkedListController {
 
     private double currX = 100;
     private double currY = 100;
+
     private Boolean right = true;
     private final ArrayList<StackPane> nodesList = new ArrayList<>();
 
@@ -57,10 +58,8 @@ public class LinkedListController {
     @FXML
     private void onAddClick() throws NumberFormatException {
 
-        int MAX_NODES = 36;
-
-        if (list_length >= MAX_NODES) {
-            showErrorMessage("Node Limit Reached", "Can't add more than " + MAX_NODES + " nodes");
+        if (list_length >= 36) {
+            showErrorMessage("Node Limit Reached", "Can't add more than " + 36 + " nodes");
             return;
         }
 
@@ -83,8 +82,18 @@ public class LinkedListController {
         nodesList.add(node);
 
         if (list_length % 9 == 0) {
+
+            if (right) {
+                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "right");
+            }
+            else {
+                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "left");
+            }
+
             currY += VERTICAL_GAP;
             right = !right;
+
+            link_panel.getChildren().add(node);
 
             addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "down");
         }
@@ -145,7 +154,6 @@ public class LinkedListController {
 
         nodesList.add(position - 1, node);
 
-
         currX = 100;
         currY = 100;
         list_length = 0;
@@ -178,10 +186,13 @@ public class LinkedListController {
 
     @FXML
     private void onResetClick() throws NumberFormatException {
+
         link_panel.getChildren().clear();
         list_length = 0;
         currX = 100;
         currY = 100;
+
+        nodesList.clear();
     }
 
     //CHECK IF BACK BUTTON IS WORKING THEN START WORK ON THE LOGIC OF THE LINKED LIST
@@ -220,7 +231,7 @@ public class LinkedListController {
             }
             case "down" -> {
                 xA = nodeA.getLayoutX() + NODE_WIDTH / 2;
-                yA = nodeA.getLayoutY() - NODE_HEIGHT;
+                yA = nodeA.getLayoutY() + NODE_HEIGHT;
 
                 xB = nodeB.getLayoutX() + NODE_WIDTH / 2;
                 yB = nodeB.getLayoutY();
