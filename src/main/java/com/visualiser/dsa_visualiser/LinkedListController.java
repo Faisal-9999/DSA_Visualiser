@@ -23,18 +23,6 @@ import static java.lang.Integer.parseInt;
 
 public class LinkedListController {
 
-    private Stage stage;
-
-    private int currX = 100;
-    private int currY = 100;
-    private Boolean right = true;
-    private final ArrayList<StackPane> nodesList = new ArrayList<>();
-
-    private int list_length = 0;
-
-    @FXML
-    private Pane link_panel;
-
     //LEFT TO RIGHT NODE ADDITION IS WORKING
 
     //TODO: POLISH GUI
@@ -42,6 +30,23 @@ public class LinkedListController {
         SUCH AS TOP TO BOTTOM AND RIGHT TO LEFT
     */
 
+
+    private final double NODE_HEIGHT = 75;
+    private final double NODE_WIDTH = 75;
+    private final double HORIZONTAL_GAP = 135;
+    private final double VERTICAL_GAP = 125;
+
+    private Stage stage;
+
+    private double currX = 100;
+    private double currY = 100;
+    private Boolean right = true;
+    private final ArrayList<StackPane> nodesList = new ArrayList<>();
+
+    private int list_length = 0;
+
+    @FXML
+    private Pane link_panel;
 
     @FXML
     private TextField position_field, add_field, insert_field, insert_value_field;
@@ -52,8 +57,10 @@ public class LinkedListController {
     @FXML
     private void onAddClick() throws NumberFormatException {
 
-        if (list_length >= 36) {
-            showErrorMessage("Node Limit Reached", new String("Can't add more than " + 36 + " nodes"));
+        int MAX_NODES = 36;
+
+        if (list_length >= MAX_NODES) {
+            showErrorMessage("Node Limit Reached", "Can't add more than " + MAX_NODES + " nodes");
             return;
         }
 
@@ -76,25 +83,25 @@ public class LinkedListController {
         nodesList.add(node);
 
         if (list_length % 9 == 0) {
-            currY += 125;
+            currY += VERTICAL_GAP;
             right = !right;
 
-            addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1);
+            addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "down");
         }
         else {
             if (right) {
-                currX += 135;
+                currX += HORIZONTAL_GAP;
 
                 link_panel.getChildren().add(node);
 
-                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1);
+                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "right");
             }
             else {
-                currX -= 135;
+                currX -= HORIZONTAL_GAP;
 
                 link_panel.getChildren().add(node);
 
-                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1);
+                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "left");
             }
         }
     }
@@ -153,15 +160,15 @@ public class LinkedListController {
             list_length++;
 
             if (list_length % 9 == 0) {
-                currY += 125;
+                currY += VERTICAL_GAP;
                 right = !right;
             }
             else {
                 if (right) {
-                    currX += 135;
+                    currX += HORIZONTAL_GAP;
                 }
                 else {
-                    currX -= 135;
+                    currX -= HORIZONTAL_GAP;
                 }
             }
 
@@ -183,43 +190,7 @@ public class LinkedListController {
         SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
     }
 
-    private void addArrow(String direction) {
-
-        direction = direction.toLowerCase().replaceAll("\\s", "");
-
-        StackPane lastNode = nodesList.getLast();
-
-        double nodeWidth = lastNode.getWidth();
-        double nodeHeight = lastNode.getHeight();
-        double x = lastNode.getLayoutX();
-        double y = lastNode.getLayoutY();
-
-        double horizontalGap = 135;
-        double verticalGap = 125;
-
-        Arrow arrow = null;
-
-        switch (direction) {
-            case "left"  -> {
-                arrow = new Arrow(x, y + nodeHeight / 2, x - horizontalGap, y);
-            }
-            case "right" -> {
-                arrow = new Arrow(x + nodeWidth, y + nodeHeight / 2, x + horizontalGap, y);
-            }
-            case "down"  -> {
-                arrow = new Arrow(x + nodeWidth / 2, y + nodeHeight, x, y + verticalGap);
-            }
-            default -> {
-                showErrorMessage("Error While Adding Arrow", "Couldn't Generate Arrow Due To Incorrect Parameter");
-            }
-        }
-
-        if (arrow != null) {
-            link_panel.getChildren().add(arrow);
-        }
-    }
-
-    private void addArrowBetweenNodes(int indexA, int indexB) {
+    private void addArrowBetweenNodes(int indexA, int indexB, String direction) {
         if (indexA < 0 || indexA >= nodesList.size() || indexB < 0 || indexB >= nodesList.size()) {
             return;
         }
@@ -227,14 +198,37 @@ public class LinkedListController {
         StackPane nodeA = nodesList.get(indexA);
         StackPane nodeB = nodesList.get(indexB);
 
-        double nodeWidth = 75;
-        double nodeHeight = 75;
+        double xA, yA, xB, yB;
 
-        double xA = nodeA.getLayoutX() + nodeWidth;
-        double yA = nodeA.getLayoutY() + nodeHeight / 2;
+        //TODO: FIX THE LOGIC FOR THE LEFT CASE
+        //TODO: SAME FOR RIGHT CASE
 
-        double xB = nodeB.getLayoutX();
-        double yB = nodeB.getLayoutY() + nodeHeight / 2;
+        switch (direction) {
+            case "right" -> {
+                xA = nodeA.getLayoutX() + NODE_WIDTH;
+                yA = nodeA.getLayoutY() + NODE_HEIGHT / 2;
+
+                xB = nodeB.getLayoutX();
+                yB = nodeB.getLayoutY() + NODE_HEIGHT / 2;
+            }
+            case "left" -> {
+                xA = nodeA.getLayoutX() - NODE_WIDTH;
+                yA = nodeA.getLayoutY() + NODE_HEIGHT / 2;
+
+                xB = nodeB.getLayoutX() + NODE_WIDTH;
+                yB = nodeB.getLayoutY() + NODE_HEIGHT / 2;
+            }
+            case "down" -> {
+                xA = nodeA.getLayoutX() + NODE_WIDTH / 2;
+                yA = nodeA.getLayoutY() - NODE_HEIGHT;
+
+                xB = nodeB.getLayoutX() + NODE_WIDTH / 2;
+                yB = nodeB.getLayoutY();
+            }
+            default -> {
+                return;
+            }
+        }
 
         Arrow arrow = new Arrow(xA, yA, xB, yB);
 
