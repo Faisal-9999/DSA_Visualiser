@@ -40,6 +40,7 @@ public class LinkedListController {
     private double currY = 100;
 
     private Boolean right = true;
+    private Boolean down = false;
     private final ArrayList<StackPane> nodesList = new ArrayList<>();
 
     private int list_length = 0;
@@ -79,13 +80,19 @@ public class LinkedListController {
 
         nodesList.add(node);
 
+        if (down) {
+            addArrowBetweenNodes("down");
+            down = false;
+            return;
+        }
+
         if (list_length % 9 == 0) {
 
             if (right) {
-                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "right");
+                addArrowBetweenNodes("right");
             }
             else {
-                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "left");
+                addArrowBetweenNodes("left");
             }
 
             currY += VERTICAL_GAP;
@@ -93,7 +100,7 @@ public class LinkedListController {
 
             link_panel.getChildren().add(node);
 
-            addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "down");
+            down = true;
         }
         else {
             if (right) {
@@ -101,14 +108,14 @@ public class LinkedListController {
 
                 link_panel.getChildren().add(node);
 
-                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "right");
+                addArrowBetweenNodes( "right");
             }
             else {
                 currX -= HORIZONTAL_GAP;
 
                 link_panel.getChildren().add(node);
 
-                addArrowBetweenNodes(nodesList.size() - 2, nodesList.size() - 1, "left");
+                addArrowBetweenNodes("left");
             }
         }
     }
@@ -199,13 +206,14 @@ public class LinkedListController {
         SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
     }
 
-    private void addArrowBetweenNodes(int indexA, int indexB, String direction) {
-        if (indexA < 0 || indexA >= nodesList.size() || indexB < 0 || indexB >= nodesList.size()) {
+    private void addArrowBetweenNodes(String direction) {
+
+        StackPane nodeA = nodesList.get(nodesList.size() - 2);
+        StackPane nodeB = nodesList.getLast();
+
+        if (nodeA == null || nodeB == null) {
             return;
         }
-
-        StackPane nodeA = nodesList.get(indexA);
-        StackPane nodeB = nodesList.get(indexB);
 
         double xA, yA, xB, yB;
 
