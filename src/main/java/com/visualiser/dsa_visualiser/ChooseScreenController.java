@@ -17,8 +17,8 @@ public class ChooseScreenController {
     }
 
     @FXML
-    private void onStackClick(ActionEvent e) {
-
+    private void onStackClick(ActionEvent e) throws IOException {
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/Stack.fxml");
     }
 
     @FXML
