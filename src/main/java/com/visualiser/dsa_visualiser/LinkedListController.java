@@ -23,27 +23,17 @@ import static java.lang.Integer.parseInt;
 
 public class LinkedListController {
 
-    //LEFT TO RIGHT NODE ADDITION IS WORKING
-
-    //TODO: POLISH GUI
-    //TODO: FIX ARROW PLACE FROM TOP TO BOTTOM
-
-
     private final double NODE_HEIGHT = 75;
     private final double NODE_WIDTH = 75;
     private final double HORIZONTAL_GAP = 135;
     private final double VERTICAL_GAP = 125;
+    private final double START_X = 100;
+    private final double START_Y = 100;
+    private final int ROW_LENGTH = 9;
+    private final int MAX_NODES = 36;
 
     private Stage stage;
-
-    private double currX = 100;
-    private double currY = 100;
-
-    private Boolean right = true;
-    private Boolean down = false;
     private final ArrayList<StackPane> nodesList = new ArrayList<>();
-
-    private int list_length = 0;
 
     @FXML
     private Pane link_panel;
@@ -56,214 +46,131 @@ public class LinkedListController {
 
     @FXML
     private void onAddClick() throws NumberFormatException {
-
-        if (list_length >= 36) {
-            showErrorMessage("Node Limit Reached", "Can't add more than " + 36 + " nodes");
+        if (nodesList.size() >= MAX_NODES) {
+            showErrorMessage("Node Limit Reached", "Can't add more than " + MAX_NODES + " nodes");
             return;
         }
-
         int value = parseInt(add_field.getText());
-
-        Rectangle rectangle = new Rectangle(75, 75);
-        rectangle.setFill(Color.WHITE);
-        rectangle.setStroke(Color.BLACK);
-
-        Text label = new Text(String.valueOf(value));
-        label.setFont(Font.font("Sans", 14));
-
-        StackPane node = new StackPane(rectangle, label);
-
-        node.setLayoutX(currX);
-        node.setLayoutY(currY);
-
-        list_length++;
-
+        StackPane node = createNode(value);
         nodesList.add(node);
-
-        if (down) {
-            addArrowBetweenNodes("down");
-            down = false;
-            return;
-        }
-
-        if (list_length % 9 == 0) {
-
-            if (right) {
-                addArrowBetweenNodes("right");
-            }
-            else {
-                addArrowBetweenNodes("left");
-            }
-
-            currY += VERTICAL_GAP;
-            right = !right;
-
-            link_panel.getChildren().add(node);
-
-            down = true;
-        }
-        else {
-            if (right) {
-                currX += HORIZONTAL_GAP;
-
-                link_panel.getChildren().add(node);
-
-                addArrowBetweenNodes( "right");
-            }
-            else {
-                currX -= HORIZONTAL_GAP;
-
-                link_panel.getChildren().add(node);
-
-                addArrowBetweenNodes("left");
-            }
-        }
+        recalcPositions();
     }
 
     @FXML
     private void onDeleteClick() throws NumberFormatException {
-
-        if (list_length <= 0) {
-            showErrorMessage("List Already Empty", "Can't delete modes in an empty list");
+        if (nodesList.isEmpty()) {
+            showErrorMessage("List Already Empty", "Can't delete nodes in an empty list");
             return;
         }
-
-        int value = parseInt(position_field.getText());
-
-        nodesList.remove(value - 1);
-
-        list_length--;
-
-        link_panel.getChildren().clear();
-
-        for (StackPane node : nodesList) {
-            link_panel.getChildren().add(node);
+        int pos = parseInt(position_field.getText());
+        if (pos < 1 || pos > nodesList.size()) {
+            showErrorMessage("Invalid Position", "Please enter a valid node position.");
+            return;
         }
+        nodesList.remove(pos - 1);
+        recalcPositions();
     }
 
     @FXML
     private void onInsertClick() throws NumberFormatException {
         int value = parseInt(insert_value_field.getText());
         int position = parseInt(insert_field.getText());
-
-        list_length++;
-
-        Rectangle rectangle = new Rectangle(75, 75);
-        rectangle.setFill(Color.WHITE);
-        rectangle.setStroke(Color.BLACK);
-
-        Text label = new Text(String.valueOf(value));
-        label.setFont(Font.font("Sans", 14));
-
-        StackPane node = new StackPane(rectangle, label);
-
-        nodesList.add(position - 1, node);
-
-        currX = 100;
-        currY = 100;
-        list_length = 0;
-        right = true;
-
-        link_panel.getChildren().clear();
-
-        for (StackPane linknode : nodesList) {
-            linknode.setLayoutX(currX);
-            linknode.setLayoutY(currY);
-
-            list_length++;
-
-            if (list_length % 9 == 0) {
-                currY += VERTICAL_GAP;
-                right = !right;
-            }
-            else {
-                if (right) {
-                    currX += HORIZONTAL_GAP;
-                }
-                else {
-                    currX -= HORIZONTAL_GAP;
-                }
-            }
-
-            link_panel.getChildren().add(linknode);
+        if (position < 1 || position > nodesList.size() + 1) {
+            showErrorMessage("Invalid Position", "Please enter a valid position to insert the node.");
+            return;
         }
+        StackPane node = createNode(value);
+        nodesList.add(position - 1, node);
+        recalcPositions();
     }
 
     @FXML
-    private void onResetClick() throws NumberFormatException {
-
+    private void onResetClick() {
         link_panel.getChildren().clear();
-        list_length = 0;
-        currX = 100;
-        currY = 100;
-
         nodesList.clear();
     }
 
-    //CHECK IF BACK BUTTON IS WORKING THEN START WORK ON THE LOGIC OF THE LINKED LIST
     @FXML
     private void onBackClick(ActionEvent e) throws IOException {
         SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
     }
 
-    private void addArrowBetweenNodes(String direction) {
+    private StackPane createNode(int value) {
+        Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
+        rectangle.setFill(Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
+        Text label = new Text(String.valueOf(value));
+        label.setFont(Font.font("Sans", 14));
+        return new StackPane(rectangle, label);
+    }
 
-        StackPane nodeA = nodesList.get(nodesList.size() - 2);
-        StackPane nodeB = nodesList.getLast();
-
-        if (nodeA == null || nodeB == null) {
-            return;
+    private void recalcPositions() {
+        link_panel.getChildren().clear();
+        for (int i = 0; i < nodesList.size(); i++) {
+            StackPane node = nodesList.get(i);
+            int row = i / ROW_LENGTH;
+            int col = i % ROW_LENGTH;
+            double x, y;
+            y = START_Y + row * VERTICAL_GAP;
+            if (row % 2 == 0) {
+                x = START_X + col * HORIZONTAL_GAP;
+            } else {
+                x = START_X + (ROW_LENGTH - 1 - col) * HORIZONTAL_GAP;
+            }
+            node.setLayoutX(x);
+            node.setLayoutY(y);
+            link_panel.getChildren().add(node);
+            if (i > 0) {
+                StackPane prevNode = nodesList.get(i - 1);
+                String direction;
+                int prevRow = (i - 1) / ROW_LENGTH;
+                if (prevRow == row) {
+                    direction = (row % 2 == 0) ? "right" : "left";
+                } else {
+                    direction = "down";
+                }
+                addArrowBetweenNodes(prevNode, node, direction);
+            }
         }
+    }
 
+    private void addArrowBetweenNodes(StackPane nodeA, StackPane nodeB, String direction) {
         double xA, yA, xB, yB;
-
-        //FIXED LOGIC FOR THE LEFT CASE
-        //TODO: SAME FOR down CASE
-
         switch (direction) {
             case "right" -> {
                 xA = nodeA.getLayoutX() + NODE_WIDTH;
                 yA = nodeA.getLayoutY() + NODE_HEIGHT / 2;
-
                 xB = nodeB.getLayoutX();
                 yB = nodeB.getLayoutY() + NODE_HEIGHT / 2;
             }
             case "left" -> {
                 xA = nodeA.getLayoutX();
                 yA = nodeA.getLayoutY() + NODE_HEIGHT / 2;
-
                 xB = nodeB.getLayoutX() + NODE_WIDTH;
                 yB = nodeB.getLayoutY() + NODE_HEIGHT / 2;
             }
             case "down" -> {
                 xA = nodeA.getLayoutX() + NODE_WIDTH / 2;
                 yA = nodeA.getLayoutY() + NODE_HEIGHT;
-
                 xB = nodeB.getLayoutX() + NODE_WIDTH / 2;
                 yB = nodeB.getLayoutY();
             }
             default -> {
+                System.out.println("Incorrect Parameter");
                 return;
             }
         }
-
         Arrow arrow = new Arrow(xA, yA, xB, yB);
-
         link_panel.getChildren().add(arrow);
     }
 
     private void showErrorMessage(String headerText, String bodyText) {
         stage = (Stage) linked_list_screen.getScene().getWindow();
-
-        Alert.AlertType type = Alert.AlertType.ERROR;
-        Alert alert = new Alert(type, "");
-
+        Alert alert = new Alert(Alert.AlertType.ERROR, "");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(stage);
-
         alert.getDialogPane().setHeaderText(headerText);
         alert.getDialogPane().setContentText(bodyText);
-
         alert.showAndWait();
     }
 }
