@@ -14,8 +14,9 @@ public class Application extends javafx.application.Application {
     //Controller classes for options, choose screen
     //exit button is functioning
     //COMPLETED LINKED LIST LOGIC
+    //COMPLETED STACK AND QUEUE
 
-    //TODO: MAKE THE CHOOSE SCREEN GUI ELEMENTS DYNAMICALLY SIZED
+    //TODO: START WORK ON GENERIC TREE LOGIC
 
     @Override
     public void start(Stage stage) throws IOException {
