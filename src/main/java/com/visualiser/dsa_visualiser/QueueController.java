@@ -19,12 +19,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class StackController {
+public class QueueController {
 
     @FXML
-    private Pane stack_panel;
+    private Pane queue_panel;
 
-    private int stackHeight = 0;
+    private int queueHeight = 0;
     private final int maxHeight = 30;
     private Stage stage;
 
@@ -34,21 +34,13 @@ public class StackController {
     private final double NODE_WIDTH = 135;
     private final double NODE_HEIGHT = 20;
 
-    private final ArrayList <StackPane> stack = new ArrayList<>();
-
-    //FRAMEWORK FOR STACK HAS BEEN CREATED
-    //QUEUE WILL BE JUST LIKE THIS JUST WITH SOME MODIFICATIONS
-
-    //TODO: COMPLETE PUSH AND POP METHOD
-    //TODO: MAKE THE NODES STACK ON TOP OF EACH OTHER
-    //TODO: DISPLAY THE NODES
-
+    private final ArrayList <StackPane> queue = new ArrayList<>();
 
     @FXML
     TextField push_value;
 
     @FXML
-    private AnchorPane stack_screen;
+    private AnchorPane queue_screen;
 
     private StackPane createNode(int value) {
         Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
@@ -61,45 +53,45 @@ public class StackController {
 
     private void displayNodes() {
 
-        stack_panel.getChildren().clear();
+        queue_panel.getChildren().clear();
 
-        for (int i = 0; i < stack.size(); i++) {
-            StackPane element = stack.get(i);
+        for (int i = 0; i < queue.size(); i++) {
+            StackPane element = queue.get(i);
             element.setLayoutX(startX);
             element.setLayoutY(startY - ((i + 1) * NODE_HEIGHT));
-            stack_panel.getChildren().add(element);
+            queue_panel.getChildren().add(element);
         }
 
     }
 
     @FXML
     private void pop() {
-        if (stackHeight <= 0) {
-            showErrorMessage("STACK IS EMPTY", "Can't pop from an empty stack");
+        if (queueHeight <= 0) {
+            showErrorMessage("QUEUE IS EMPTY", "Can't pop from an empty queue");
             return;
         }
 
-        stack.removeLast();
+        queue.removeFirst();
         displayNodes();
-        stackHeight--;
+        queueHeight--;
     }
 
     @FXML
     private void push() throws NumberFormatException {
-        if (stackHeight >= maxHeight) {
-            showErrorMessage("MAX STACK HEIGHT REACHED", "Can't push more values, reached maximum stack height");
+        if (queueHeight >= maxHeight) {
+            showErrorMessage("MAX QUEUE HEIGHT REACHED", "Can't push more values, reached maximum queue height");
             return;
         }
 
         int pushed_val = Integer.parseInt(push_value.getText());
 
-        stack.add(createNode(pushed_val));
+        queue.add(createNode(pushed_val));
         displayNodes();
-        stackHeight++;
+        queueHeight++;
     }
 
     private void showErrorMessage(String headerText, String bodyText) {
-        stage = (Stage) stack_screen.getScene().getWindow();
+        stage = (Stage) queue_screen.getScene().getWindow();
         Alert alert = new Alert(Alert.AlertType.ERROR, "");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(stage);
@@ -110,9 +102,9 @@ public class StackController {
 
     @FXML
     private void reset() {
-        stack.clear();
-        stack_panel.getChildren().clear();
-        stackHeight = 0;
+        queue.clear();
+        queue_panel.getChildren().clear();
+        queueHeight = 0;
     }
 
     @FXML

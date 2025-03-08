@@ -7,7 +7,7 @@
    <children>
       <Button layoutX="63.0" layoutY="175.0" mnemonicParsing="false" onAction="#onLinkedListClick" text="Linked List" />
       <Button layoutX="373.0" layoutY="271.0" mnemonicParsing="false" onAction="#onStackClick" text="Stack" />
-      <Button layoutX="510.0" layoutY="175.0" mnemonicParsing="false" text="Queue" />
+      <Button layoutX="510.0" layoutY="175.0" mnemonicParsing="false" onAction="#onQueueClick" text="Queue" />
       <Button layoutX="174.0" layoutY="283.0" mnemonicParsing="false" text="Binary Tree" />
       <Button layoutX="200.0" layoutY="89.0" mnemonicParsing="false" text="Binary Search Tree" />
       <Button layoutX="418.0" layoutY="89.0" mnemonicParsing="false" text="Hashmap" />
