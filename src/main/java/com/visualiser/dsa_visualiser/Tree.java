@@ -1,5 +1,6 @@
 package com.visualiser.dsa_visualiser;
 
+import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
@@ -56,6 +57,35 @@ public class Tree {
                 q.add(current.right);
             }
         }
+    }
+
+    public Boolean search(StackPane node, StackPane parentNode) {
+        Boolean isLeft = null;
+
+        LinkedList<Node> q = new LinkedList<>();
+
+        q.add(root);
+
+        while (!q.isEmpty()) {
+
+            Node current =  q.poll();
+
+            if (current.left.data == node) {
+                parentNode = current.data;
+                isLeft = true;
+                break;
+            } else if (current.right.data == node) {
+                parentNode = current.data;
+                isLeft = false;
+                break;
+            }
+            else {
+                q.add(current.left);
+                q.add(current.right);
+            }
+        }
+
+        return isLeft;
     }
 
     public void deleteNode(StackPane data) {

@@ -57,9 +57,20 @@ public class TreeController {
 
         tree.addNode(node);
 
-        //TODO: FIND A WAY TO RETURN A REFERENCE TO THE PARENT NODE AND PLACE THE NEW NODE DIAGONALLY RELATIVE TO THAT
-        //TODO: DEPENDING ON IF ITS PLACED ON THE LEFT OR RIGHT OF THE PARENT
+        StackPane parent = null;
+        Boolean isLeft = tree.search(node, parent);
 
+        if (isLeft == null || parent == null) return;
+
+        double parentX = parent.getLayoutX();
+        double parentY = parent.getLayoutY();
+
+        if (isLeft) {
+            //TODO: ADD LOGIC FOR ADDING NODE TO THE LEFT OF THE PARENT
+        }
+        else{
+            //TODO: ADD LOGIC FOR ADDING NODE TO THE RIGHT OF THE PARENT
+        }
 
 
     }
