@@ -7,107 +7,28 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 //TODO: ADD GUI ELEMENTS TO tree.fxml and connect with this backend class also add the BFS search below
 //TODO: FIND A WAY TO DISPLAY THE NODES PROPERLY WITH NO COLLISIONS
 
-class Tree<T> {
-    private class Node<T> {
-        Node<T> left;
-        Node<T> right;
-
-        T data;
-
-        Node(T data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-    }
-
-    private Node<T> root = null;
-    private int depth = 0;
-
-    public int getDepth() {
-        return depth;
-    }
-
-    public void incrementDepth() {
-        depth++;
-    }
-
-    public void addNode(T data) {
-        if (root == null) {
-            root = new Node<>(data);
-            return;
-        }
-
-        LinkedList<Node> q = new LinkedList<>();
-
-        q.add(root);
-
-        while (!q.isEmpty()) {
-
-            Node<T> current =  q.poll();
-
-            if (current.left == null) {
-                current.left = new Node<>(data);
-                break;
-            } else if (current.right == null) {
-                current.right = new Node<>(data);
-                break;
-            }
-            else {
-                q.add(current.left);
-                q.add(current.right);
-            }
-        }
-    }
-
-    public void level_traversal() {
-        if (root == null) {
-            return;
-        }
-
-        ArrayList<ArrayList<T>> nodes = new ArrayList<>();
-
-        LinkedList<Node<T>> q = new LinkedList<>();
-        q.add(root);
-
-        while (!q.isEmpty()) {
-
-            ArrayList<T> list = new ArrayList<>();
-
-            int length = q.size();
-
-            for (int i = 0; i < length; i++) {
-                if (q.peekFirst().left != null) q.add(q.peekFirst().left);
-                if (q.peekFirst().right != null) q.add(q.peekFirst().right);
-                list.add(q.poll().data);
-            }
-
-            nodes.add(list);
-        }
-    }
-
-    public void deleteNode(int data) {
-
-    }
-
-}
-
 public class TreeController {
 
-    private final int NODE_RADIUS = 50;
-
+    private final int NODE_RADIUS = 35;
     private Stage stage;
+    private Boolean isFirst = true;
 
-    Tree<StackPane> tree = new Tree<>();
+    private final double startX = 625;
+    private final double startY = 50;
+
+
+    Tree tree = new Tree();
 
     @FXML
     Pane Tree_panel;
@@ -120,6 +41,30 @@ public class TreeController {
 
     @FXML
     private void onAddClick() {
+        int value = Integer.parseInt(add_field.getText());
+        StackPane node = createNode(value);
+
+        if(isFirst) {
+            node.setLayoutX(startX);
+            node.setLayoutY(startY);
+
+            tree.addNode(node);
+            Tree_panel.getChildren().add(node);
+
+            isFirst = false;
+            return;
+        }
+
+        tree.addNode(node);
+
+        //TODO: FIND A WAY TO RETURN A REFERENCE TO THE PARENT NODE AND PLACE THE NEW NODE DIAGONALLY RELATIVE TO THAT
+        //TODO: DEPENDING ON IF ITS PLACED ON THE LEFT OR RIGHT OF THE PARENT
+
+
+
+    }
+
+    private void displayNodes() {
 
     }
 
@@ -130,7 +75,18 @@ public class TreeController {
 
     @FXML
     private void onResetClick() {
+        Tree_panel.getChildren().clear();
+        isFirst = true;
+        tree = new Tree();
+    }
 
+    private StackPane createNode(int value) {
+        Circle circle = new Circle(NODE_RADIUS);
+        circle.setFill(Color.WHITE);
+        circle.setStroke(Color.BLACK);
+        Text label = new Text(String.valueOf(value));
+        label.setFont(Font.font("Sans", 14));
+        return new StackPane(circle, label);
     }
 
     @FXML

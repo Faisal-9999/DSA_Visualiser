@@ -28,7 +28,7 @@ public class ChooseScreenController {
 
     @FXML
     private void onBinaryTreeClick(ActionEvent e) throws IOException {
-        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/queue.fxml");
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/tree.fxml");
     }
 
     @FXML
