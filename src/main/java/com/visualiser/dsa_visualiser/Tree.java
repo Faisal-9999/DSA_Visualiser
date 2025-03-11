@@ -1,95 +1,68 @@
 package com.visualiser.dsa_visualiser;
 
-import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Tree {
     private class Node {
         Node left;
         Node right;
-
         StackPane data;
-
         Node(StackPane data) {
             this.data = data;
             this.left = null;
             this.right = null;
         }
     }
-
     private Node root = null;
-    private int depth = 0;
-
-    public int getDepth() {
-        return depth;
-    }
-
-    public void incrementDepth() {
-        depth++;
-    }
 
     public void addNode(StackPane data) {
         if (root == null) {
             root = new Node(data);
             return;
         }
-
         LinkedList<Node> q = new LinkedList<>();
-
         q.add(root);
-
         while (!q.isEmpty()) {
-
-            Node current =  q.poll();
-
+            Node current = q.poll();
             if (current.left == null) {
                 current.left = new Node(data);
                 break;
             } else if (current.right == null) {
                 current.right = new Node(data);
                 break;
-            }
-            else {
+            } else {
                 q.add(current.left);
                 q.add(current.right);
             }
         }
     }
-
-    public Boolean search(StackPane node, StackPane parentNode) {
-        Boolean isLeft = null;
-
+    public class SearchResult {
+        public StackPane parent;
+        public Boolean isLeft;
+        public SearchResult(StackPane parent, Boolean isLeft) {
+            this.parent = parent;
+            this.isLeft = isLeft;
+        }
+    }
+    public SearchResult search(StackPane node) {
         LinkedList<Node> q = new LinkedList<>();
-
         q.add(root);
-
         while (!q.isEmpty()) {
-
-            Node current =  q.poll();
-
-            if (current.left.data == node) {
-                parentNode = current.data;
-                isLeft = true;
-                break;
-            } else if (current.right.data == node) {
-                parentNode = current.data;
-                isLeft = false;
-                break;
-            }
-            else {
+            Node current = q.poll();
+            if(current.left != null) {
+                if(current.left.data == node) {
+                    return new SearchResult(current.data, true);
+                }
                 q.add(current.left);
+            }
+            if(current.right != null) {
+                if(current.right.data == node) {
+                    return new SearchResult(current.data, false);
+                }
                 q.add(current.right);
             }
         }
-
-        return isLeft;
+        return null;
     }
-
-    public void deleteNode(StackPane data) {
-
-    }
-
 }

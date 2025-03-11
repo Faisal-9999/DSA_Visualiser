@@ -9,9 +9,9 @@
       <AnchorPane fx:id="Tree_panel" layoutX="6.0" layoutY="3.0" prefHeight="349.0" prefWidth="589.0" />
       <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
       <Button layoutX="159.0" layoutY="361.0" mnemonicParsing="false" onAction="#onAddClick" text="Add" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="159.0" />
-      <Button layoutX="342.0" layoutY="361.0" mnemonicParsing="false" onAction="#onDeleteClick" text="Delete" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="342.0" />
-      <Button layoutX="541.0" layoutY="361.0" mnemonicParsing="false" text="Reset" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <Button layoutX="342.0" layoutY="361.0" mnemonicParsing="false" onAction="#onDeleteClick" text="Delete" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="342.0" AnchorPane.rightAnchor="207.0" />
+      <Button layoutX="541.0" layoutY="361.0" mnemonicParsing="false" onAction="#onResetClick" text="Reset" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
       <TextField fx:id="add_field" layoutX="215.0" layoutY="361.0" prefHeight="25.0" prefWidth="66.0" promptText="value" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="215.0" />
-      <TextField fx:id="delete_field" layoutX="403.0" layoutY="361.0" prefHeight="25.0" prefWidth="66.0" promptText="value" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="131.0" />
+      <TextField fx:id="delete_field" layoutX="403.0" layoutY="361.0" prefHeight="25.0" prefWidth="66.0" promptText="value" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="403.0" AnchorPane.rightAnchor="131.0" />
    </children>
 </AnchorPane>
