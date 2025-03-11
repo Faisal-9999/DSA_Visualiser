@@ -1,7 +1,6 @@
 package com.visualiser.dsa_visualiser;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
@@ -17,6 +16,8 @@ public class Application extends javafx.application.Application {
     //COMPLETED STACK AND QUEUE
 
     //TODO: START WORK ON GENERIC TREE LOGIC
+    //TODO: FIX COLLISIONS
+    //TODO: KEEP MAX DEPTH TO 2 OR 3
 
     @Override
     public void start(Stage stage) throws IOException {
