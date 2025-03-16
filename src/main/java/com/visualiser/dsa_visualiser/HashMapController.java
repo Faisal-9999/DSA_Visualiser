@@ -1,16 +1,38 @@
 package com.visualiser.dsa_visualiser;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Line;
+import javafx.scene.paint.Color;
+import javafx.scene.control.Label;
+
+import java.util.HashMap;
 
 import java.util.ArrayList;
 
+enum MapType {
+    IntegerHashMap,
+    StringHashMap,
+    CharacterHashMap
+}
+
+//TODO: RECHECK NODE CREATION FUNCTIONS AND THEN CONTINUE WORK
+
 public class HashMapController {
 
-    private ArrayList<Integer> keys = new ArrayList<>();
-    private ArrayList<Integer> values = new ArrayList<>();
+    private final double NODE_WIDTH = 150;
+    private final double NODE_HEIGHT = 75;
+
+    ArrayList<StackPane> HashMapNodes = new ArrayList<>();
+
+    private MapType currentMap = null;
+
+
     private final int MAX_KEYS = 12;
 
     @FXML
@@ -25,6 +47,83 @@ public class HashMapController {
     @FXML
     private void onInsertClick() {
 
+    }
+
+    private StackPane createNode() {
+        Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
+        rectangle.setFill(Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
+
+        Line dividerLine = new Line();
+        dividerLine.setStartX(0);
+        dividerLine.setEndX(0);
+        dividerLine.setStartY(0);
+        dividerLine.setEndY(NODE_HEIGHT);
+
+        dividerLine.setTranslateX(NODE_WIDTH / 2);
+        dividerLine.setStroke(Color.BLACK);
+
+        StackPane node = new StackPane();
+        node.getChildren().addAll(rectangle, dividerLine);
+
+        return node;
+    }
+
+    private StackPane createIntMapNode(int value, int key) {
+        if (currentMap == MapType.StringHashMap || currentMap == MapType.CharacterHashMap) {
+            return null;
+        }
+
+        if (currentMap == null)
+            currentMap = MapType.IntegerHashMap;
+
+        StackPane IntegerNode = createNode();
+
+        Label nodeKey = new Label("" + value);
+        Label nodeValue = new Label("" + key);
+
+        StackPane.setAlignment(nodeKey, Pos.CENTER_LEFT);
+        StackPane.setAlignment(nodeValue, Pos.CENTER_RIGHT);
+
+        return IntegerNode;
+    }
+
+    private StackPane createStringMapNode(String word, int key) {
+        if (currentMap == MapType.IntegerHashMap || currentMap == MapType.CharacterHashMap) {
+            return null;
+        }
+
+        if (currentMap == null)
+            currentMap = MapType.StringHashMap;
+
+        StackPane StringNode = createNode();
+
+        Label nodeKey = new Label(word);
+        Label nodeValue = new Label("" + key);
+
+        StackPane.setAlignment(nodeKey, Pos.CENTER_LEFT);
+        StackPane.setAlignment(nodeValue, Pos.CENTER_RIGHT);
+
+        return StringNode;
+    }
+
+    private StackPane createCharacterMapNode(char c, int key) {
+        if (currentMap == MapType.IntegerHashMap || currentMap == MapType.StringHashMap) {
+            return null;
+        }
+
+        if (currentMap == null)
+            currentMap = MapType.StringHashMap;
+
+        StackPane CharacterNode = createNode();
+
+        Label nodeKey = new Label("" + c);
+        Label nodeValue = new Label("" + key);
+
+        StackPane.setAlignment(nodeKey, Pos.CENTER_LEFT);
+        StackPane.setAlignment(nodeValue, Pos.CENTER_RIGHT);
+
+        return CharacterNode;
     }
 
     @FXML
