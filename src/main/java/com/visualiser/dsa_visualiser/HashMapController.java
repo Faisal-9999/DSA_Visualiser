@@ -1,5 +1,6 @@
 package com.visualiser.dsa_visualiser;
 
+import com.visualiser.miscellaneous.DataTypeChecker;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -32,7 +33,10 @@ public class HashMapController {
     private final double NODE_WIDTH = 150;
     private final double NODE_HEIGHT = 75;
 
-    ArrayList<StackPane> HashMapNodes = new ArrayList<>();
+    private final double startX = 600;
+    private final double startY = 100;
+
+    private ArrayList<StackPane> HashMapNodes = new ArrayList<>();
 
     private MapType currentMap = null;
 
@@ -41,7 +45,7 @@ public class HashMapController {
     @FXML
     public TextField insertKeyField;
     @FXML
-    public  TextField insertValueField;
+    public TextField insertValueField;
 
     @FXML
     public TextField incrementKeyField;
@@ -63,6 +67,36 @@ public class HashMapController {
 
     @FXML
     private void onInsertClick() {
+        DataTypeChecker checker = new DataTypeChecker();
+
+        StackPane node = null;
+
+        String input = insertKeyField.getText();
+        String value = insertValueField.getText();
+
+        if (!checker.isInteger(value)) {
+            //TODO: ERROR MESSAGE HERE
+            return;
+        }
+
+        if (checker.isInteger(input)) {
+            int val = Integer.parseInt(input);
+            node = createIntMapNode(Integer.parseInt(input), Integer.parseInt(value));
+        } else if (checker.isCharacter(input)) {
+            char c = input.charAt(0);
+            node = createCharacterMapNode(c, Integer.parseInt(value));
+        } else {
+            node = createStringMapNode(input, Integer.parseInt(value));
+        }
+
+        //TODO: ADD CODE HERE FOR ASSIGNING THE STARTING COORDINATES FOR X AND Y
+
+
+//            node.setLayoutX();
+//            node.setLayoutY();
+
+        HashMapNodes.add(node);
+
 
     }
 
@@ -86,10 +120,18 @@ public class HashMapController {
         return node;
     }
 
+    //This function will be used to print all the nodes again
+    //FOR EXAMPLE WHEN THE USER REMOVES A KEY THAT IS IN BETWEEN THE HASHMAP
+    private void printMap() {
+
+    }
+
     private StackPane createIntMapNode(int value, int key) {
         if (currentMap == MapType.StringHashMap || currentMap == MapType.CharacterHashMap) {
             return null;
         }
+
+        //TODO: ADD EACH NODE TO THE ARRAYLIST
 
         if (currentMap == null)
             currentMap = MapType.IntegerHashMap;
@@ -130,7 +172,7 @@ public class HashMapController {
         }
 
         if (currentMap == null)
-            currentMap = MapType.StringHashMap;
+            currentMap = MapType.CharacterHashMap;
 
         StackPane CharacterNode = createNode();
 
