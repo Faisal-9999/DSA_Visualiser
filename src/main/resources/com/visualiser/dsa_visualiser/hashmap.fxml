@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.visualiser.dsa_visualiser.HashMapController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="map_screen" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.dsa_visualiser.HashMapController">
+   <children>
+      <AnchorPane fx:id="map_panel" layoutX="2.0" layoutY="2.0" prefHeight="313.0" prefWidth="594.0" />
+      <Button layoutX="12.0" layoutY="360.0" mnemonicParsing="false" onAction="#onBackClick" prefHeight="16.0" prefWidth="56.0" text="Back" />
+      <Button layoutX="12.0" layoutY="322.0" mnemonicParsing="false" onAction="#onInsertClick" text="Insert" />
+      <TextField fx:id="insertKeyField" layoutX="70.0" layoutY="322.0" prefHeight="26.0" prefWidth="68.0" promptText="Key" />
+      <TextField fx:id="insertValueField" layoutX="144.0" layoutY="322.0" prefHeight="26.0" prefWidth="68.0" promptText="Value" />
+      <Button layoutX="407.0" layoutY="322.0" mnemonicParsing="false" onAction="#onDecrementClick" text="Decrement" />
+      <Button layoutX="237.0" layoutY="322.0" mnemonicParsing="false" onAction="#onIncrementClick" text="Increment" />
+      <TextField fx:id="incrementKeyField" layoutX="327.0" layoutY="322.0" prefHeight="26.0" prefWidth="68.0" promptText="Key" />
+      <TextField fx:id="decrementKeyField" layoutX="506.0" layoutY="322.0" prefHeight="26.0" prefWidth="68.0" promptText="Key" />
+      <Button layoutX="512.0" layoutY="360.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="56.0" text="Reset" />
+      <Button layoutX="237.0" layoutY="360.0" mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="26.0" prefWidth="82.0" text="Remove" />
+      <TextField fx:id="removeKeyField" layoutX="326.0" layoutY="360.0" prefHeight="26.0" prefWidth="68.0" promptText="Key" />
+   </children>
 </AnchorPane>

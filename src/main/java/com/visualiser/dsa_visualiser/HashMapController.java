@@ -2,6 +2,8 @@ package com.visualiser.dsa_visualiser;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -22,6 +24,8 @@ enum MapType {
 }
 
 //TODO: RECHECK NODE CREATION FUNCTIONS AND THEN CONTINUE WORK
+//TODO: ADD GUI FOR THE HASHMAP AND CUSTOM ERROR MESSAGES IF FOR EXAMPLE THE CURRENT
+//TODO: HASHMAP IS OF STRING TYPE AND THE USER tries to add an integer as key
 
 public class HashMapController {
 
@@ -32,8 +36,21 @@ public class HashMapController {
 
     private MapType currentMap = null;
 
-
     private final int MAX_KEYS = 12;
+
+    @FXML
+    public TextField insertKeyField;
+    @FXML
+    public  TextField insertValueField;
+
+    @FXML
+    public TextField incrementKeyField;
+
+    @FXML
+    public TextField decrementKeyField;
+
+    @FXML
+    public TextField removeKeyField;
 
     @FXML
     private Pane map_panel;
@@ -138,6 +155,16 @@ public class HashMapController {
 
     @FXML
     private void onResetClick() {
+
+    }
+
+    @FXML
+    private void onRemoveClick() {
+
+    }
+
+    @FXML
+    private void onBackClick() {
 
     }
 }
