@@ -108,6 +108,6 @@ public class StackController {
 
     @FXML
     private void onBackClick(ActionEvent e) throws IOException {
-        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
+        SceneSwitcher.back(e, stage);
     }
 }

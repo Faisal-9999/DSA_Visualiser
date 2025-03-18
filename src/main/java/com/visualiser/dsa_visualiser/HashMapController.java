@@ -1,6 +1,7 @@
 package com.visualiser.dsa_visualiser;
 
 import com.visualiser.miscellaneous.DataTypeChecker;
+import com.visualiser.miscellaneous.ErrorMessage;
 import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -86,7 +87,7 @@ public class HashMapController {
         String value = insertValueField.getText();
 
         if (!checker.isInteger(value)) {
-            //TODO: ERROR MESSAGE HERE
+            ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Key Type", "Key can only be an integer");
             return;
         }
 
@@ -133,7 +134,7 @@ public class HashMapController {
     //This function will be used to print all the nodes again
     //FOR EXAMPLE WHEN THE USER REMOVES A KEY THAT IS IN BETWEEN THE HASHMAP
     private void printMap() {
-
+        //TODO: ADD CODE HERE NEXT
     }
 
     private StackPane createIntMapNode(int value, int key) {
@@ -203,14 +204,14 @@ public class HashMapController {
                     stringMap.put(incrementKey, stringMap.get(incrementKey) + 1);
                 }
                 else {
-                    //TODO: ADD ERROR MESSAGE TO TELL THE USER KEY DOESN'T EXIST SO CANT INCREMENT IT
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Key Doesn't Exist", "Kay " + incrementKey + " doesn't exist");
+                    return;
                 }
-                break;
             }
             case IntegerHashMap -> {
 
                 if (!checker.isInteger(incrementKey)) {
-                    //TODO: SHOW ERROR MESSAGE FOR NOT ENTERING AN INTEGER INTO A INTEGER HASHMAP
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Key Type", "Can't add a non integer key into an integer hashmap");
                     return;
                 }
 
@@ -220,13 +221,13 @@ public class HashMapController {
                     integerMap.put(val, integerMap.get(val) + 1);
                 }
                 else {
-                    //TODO: ADD ERROR MESSAGE TO TELL THE USER KEY DOESN'T EXIST SO CANT INCREMENT IT
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Key Doesn't Exist", "Key called " + incrementKey + " doesn't exist in the hashmap");
+                    return;
                 }
-                break;
             }
             case CharacterHashMap -> {
                 if (!checker.isCharacter(incrementKey)) {
-                    //TODO: SHOW ERROR MESSAGE FOR NOT ENTERING A CHARACTER INTO A CHARACTER HASHMAP
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Key Type", "Key of this type doesn't exist in a character hashmap");
                     return;
                 }
 
@@ -236,15 +237,17 @@ public class HashMapController {
                     characterMap.put(character, characterMap.get(character) + 1);
                 }
                 else {
-                    //TODO: SHOW ERROR MESSAGE KEY DOESN'T EXIST
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Key Doesn't Exist", "Key called " + character + " doesn't exist in the hashmap");
+                    return;
                 }
-
-                break;
             }
             default -> {
-                //TODO: ADD ERROR MESSAGE FOR NOT BEING ABLE TO INCREMENT IN A HASHMAP THAT DOESNT EXIST
+                ErrorMessage.showErrorMessage(map_screen, stage, "Hashmap Doesn't Exist", "Can't increment in a empty hashmap");
+                return;
             }
         }
+
+        printMap();
     }
 
     @FXML
@@ -266,6 +269,6 @@ public class HashMapController {
 
     @FXML
     private void onBackClick(ActionEvent e) throws IOException {
-        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
+        SceneSwitcher.back(e, stage);
     }
 }

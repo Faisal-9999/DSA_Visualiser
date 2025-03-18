@@ -23,4 +23,8 @@ public class SceneSwitcher {
         stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("esc"));
         stage.show();
     }
+    public static void back(ActionEvent e, Stage stage) throws IOException {
+        switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
+    }
+
 }
