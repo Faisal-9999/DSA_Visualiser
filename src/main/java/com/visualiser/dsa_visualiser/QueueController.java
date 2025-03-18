@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.visualiser.miscellaneous.ErrorMessage.showErrorMessage;
+
 
 public class QueueController {
 
@@ -67,7 +69,7 @@ public class QueueController {
     @FXML
     private void pop() {
         if (queueHeight <= 0) {
-            showErrorMessage("QUEUE IS EMPTY", "Can't pop from an empty queue");
+            showErrorMessage(queue_screen, stage, "QUEUE IS EMPTY", "Can't pop from an empty queue");
             return;
         }
 
@@ -79,7 +81,7 @@ public class QueueController {
     @FXML
     private void push() throws NumberFormatException {
         if (queueHeight >= maxHeight) {
-            showErrorMessage("MAX QUEUE HEIGHT REACHED", "Can't push more values, reached maximum queue height");
+            showErrorMessage(queue_screen, stage,"MAX QUEUE HEIGHT REACHED", "Can't push more values, reached maximum queue height");
             return;
         }
 
@@ -88,16 +90,6 @@ public class QueueController {
         queue.add(createNode(pushed_val));
         displayNodes();
         queueHeight++;
-    }
-
-    private void showErrorMessage(String headerText, String bodyText) {
-        stage = (Stage) queue_screen.getScene().getWindow();
-        Alert alert = new Alert(Alert.AlertType.ERROR, "");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(stage);
-        alert.getDialogPane().setHeaderText(headerText);
-        alert.getDialogPane().setContentText(bodyText);
-        alert.showAndWait();
     }
 
     @FXML

@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.visualiser.miscellaneous.ErrorMessage.showErrorMessage;
 import static java.lang.Integer.parseInt;
 
 public class LinkedListController {
@@ -47,7 +48,7 @@ public class LinkedListController {
     @FXML
     private void onAddClick() throws NumberFormatException {
         if (nodesList.size() >= MAX_NODES) {
-            showErrorMessage("Node Limit Reached", "Can't add more than " + MAX_NODES + " nodes");
+            showErrorMessage(linked_list_screen, stage,"Node Limit Reached", "Can't add more than " + MAX_NODES + " nodes");
             return;
         }
         int value = parseInt(add_field.getText());
@@ -59,12 +60,12 @@ public class LinkedListController {
     @FXML
     private void onDeleteClick() throws NumberFormatException {
         if (nodesList.isEmpty()) {
-            showErrorMessage("List Already Empty", "Can't delete nodes in an empty list");
+            showErrorMessage(linked_list_screen, stage, "List Already Empty", "Can't delete nodes in an empty list");
             return;
         }
         int pos = parseInt(position_field.getText());
         if (pos < 1 || pos > nodesList.size()) {
-            showErrorMessage("Invalid Position", "Please enter a valid node position.");
+            showErrorMessage(linked_list_screen, stage,"Invalid Position", "Please enter a valid node position.");
             return;
         }
         nodesList.remove(pos - 1);
@@ -76,7 +77,7 @@ public class LinkedListController {
         int value = parseInt(insert_value_field.getText());
         int position = parseInt(insert_field.getText());
         if (position < 1 || position > nodesList.size() + 1) {
-            showErrorMessage("Invalid Position", "Please enter a valid position to insert the node.");
+            showErrorMessage(linked_list_screen, stage,"Invalid Position", "Please enter a valid position to insert the node.");
             return;
         }
         StackPane node = createNode(value);
@@ -162,15 +163,5 @@ public class LinkedListController {
         }
         Arrow arrow = new Arrow(xA, yA, xB, yB);
         link_panel.getChildren().add(arrow);
-    }
-
-    private void showErrorMessage(String headerText, String bodyText) {
-        stage = (Stage) linked_list_screen.getScene().getWindow();
-        Alert alert = new Alert(Alert.AlertType.ERROR, "");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(stage);
-        alert.getDialogPane().setHeaderText(headerText);
-        alert.getDialogPane().setContentText(bodyText);
-        alert.showAndWait();
     }
 }

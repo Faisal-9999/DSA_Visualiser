@@ -5,11 +5,13 @@ import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Line;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 enum MapType {
@@ -41,9 +44,9 @@ public class HashMapController {
     private final double startY = 400;
     private double currentNodePosition = 0;
 
-    private HashMap<String, Integer> stringMap = new HashMap<>();
-    private HashMap<Character, Integer> characterMap = new HashMap<>();
-    private HashMap<Integer, Integer> integerMap = new HashMap<>();
+    private LinkedHashMap<String, Integer> stringMap = new LinkedHashMap<>();
+    private LinkedHashMap<Character, Integer> characterMap = new LinkedHashMap<>();
+    private LinkedHashMap<Integer, Integer> integerMap = new LinkedHashMap<>();
 
     private MapType currentMap = null;
 
@@ -229,12 +232,11 @@ public class HashMapController {
 
                 char character = incrementKey.charAt(0);
 
-
                 if (characterMap.containsKey(character)) {
                     characterMap.put(character, characterMap.get(character) + 1);
                 }
                 else {
-                    //TODO: SHOW ERROR MESSAGE KEY DOESNT EXIST
+                    //TODO: SHOW ERROR MESSAGE KEY DOESN'T EXIST
                 }
 
                 break;

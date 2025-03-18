@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.visualiser.miscellaneous.ErrorMessage.showErrorMessage;
 
 public class StackController {
 
@@ -75,7 +76,7 @@ public class StackController {
     @FXML
     private void pop() {
         if (stackHeight <= 0) {
-            showErrorMessage("STACK IS EMPTY", "Can't pop from an empty stack");
+            showErrorMessage(stack_screen, stage, "STACK IS EMPTY", "Can't pop from an empty stack");
             return;
         }
 
@@ -87,7 +88,7 @@ public class StackController {
     @FXML
     private void push() throws NumberFormatException {
         if (stackHeight >= maxHeight) {
-            showErrorMessage("MAX STACK HEIGHT REACHED", "Can't push more values, reached maximum stack height");
+            showErrorMessage(stack_screen, stage,"MAX STACK HEIGHT REACHED", "Can't push more values, reached maximum stack height");
             return;
         }
 
@@ -96,16 +97,6 @@ public class StackController {
         stack.add(createNode(pushed_val));
         displayNodes();
         stackHeight++;
-    }
-
-    private void showErrorMessage(String headerText, String bodyText) {
-        stage = (Stage) stack_screen.getScene().getWindow();
-        Alert alert = new Alert(Alert.AlertType.ERROR, "");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(stage);
-        alert.getDialogPane().setHeaderText(headerText);
-        alert.getDialogPane().setContentText(bodyText);
-        alert.showAndWait();
     }
 
     @FXML
