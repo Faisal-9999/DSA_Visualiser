@@ -40,4 +40,9 @@ public class ChooseScreenController {
     private void onBackClick(ActionEvent e) throws IOException {
         SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/main_menu.fxml");
     }
+
+    @FXML
+    private void onHashMapClick(ActionEvent e) throws IOException {
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/hashmap.fxml");
+    }
 }

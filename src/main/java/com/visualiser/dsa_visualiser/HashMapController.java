@@ -1,6 +1,8 @@
 package com.visualiser.dsa_visualiser;
 
 import com.visualiser.miscellaneous.DataTypeChecker;
+import com.visualiser.miscellaneous.SceneSwitcher;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,9 +16,11 @@ import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 enum MapType {
     IntegerHashMap,
@@ -24,21 +28,26 @@ enum MapType {
     CharacterHashMap
 }
 
-//TODO: RECHECK NODE CREATION FUNCTIONS AND THEN CONTINUE WORK
-//TODO: ADD GUI FOR THE HASHMAP AND CUSTOM ERROR MESSAGES IF FOR EXAMPLE THE CURRENT
-//TODO: HASHMAP IS OF STRING TYPE AND THE USER tries to add an integer as key
+//THE PREVIOUS ARRAYLIST HAS BEEN ABANDONED NOW DIFFERENT HASHMAPS WILL BE USED TO GET THE STACK NODES
+//BASICALLY WE JUST KEEP ADDING ON THE LOCATION OF EACH NODE BASED ON WHAT THEIR POSITION IS IN THE HASHMAP
+//THE PRINT MAP FUNCTION AND INSERT NODE FUNCTION WILL BE MAINLY UTILISING THIS METHOD
 
 public class HashMapController {
 
     private final double NODE_WIDTH = 150;
     private final double NODE_HEIGHT = 75;
 
-    private final double startX = 600;
-    private final double startY = 100;
+    private final double startX = 550;
+    private final double startY = 400;
+    private double currentNodePosition = 0;
 
-    private ArrayList<StackPane> HashMapNodes = new ArrayList<>();
+    private HashMap<String, Integer> stringMap = new HashMap<>();
+    private HashMap<Character, Integer> characterMap = new HashMap<>();
+    private HashMap<Integer, Integer> integerMap = new HashMap<>();
 
     private MapType currentMap = null;
+
+    private DataTypeChecker checker = new DataTypeChecker();
 
     private final int MAX_KEYS = 12;
 
@@ -67,7 +76,6 @@ public class HashMapController {
 
     @FXML
     private void onInsertClick() {
-        DataTypeChecker checker = new DataTypeChecker();
 
         StackPane node = null;
 
@@ -91,11 +99,10 @@ public class HashMapController {
 
         //TODO: ADD CODE HERE FOR ASSIGNING THE STARTING COORDINATES FOR X AND Y
 
+        node.setLayoutX(startX);
+        node.setLayoutY(startY - (currentNodePosition * NODE_HEIGHT));
 
-//            node.setLayoutX();
-//            node.setLayoutY();
-
-        HashMapNodes.add(node);
+        map_panel.getChildren().add(node);
 
 
     }
@@ -130,8 +137,6 @@ public class HashMapController {
         if (currentMap == MapType.StringHashMap || currentMap == MapType.CharacterHashMap) {
             return null;
         }
-
-        //TODO: ADD EACH NODE TO THE ARRAYLIST
 
         if (currentMap == null)
             currentMap = MapType.IntegerHashMap;
@@ -187,7 +192,57 @@ public class HashMapController {
 
     @FXML
     private void onIncrementClick() {
+        String incrementKey = incrementKeyField.getText();
 
+        switch (currentMap) {
+            case StringHashMap -> {
+                if (stringMap.containsKey(incrementKey)) {
+                    stringMap.put(incrementKey, stringMap.get(incrementKey) + 1);
+                }
+                else {
+                    //TODO: ADD ERROR MESSAGE TO TELL THE USER KEY DOESN'T EXIST SO CANT INCREMENT IT
+                }
+                break;
+            }
+            case IntegerHashMap -> {
+
+                if (!checker.isInteger(incrementKey)) {
+                    //TODO: SHOW ERROR MESSAGE FOR NOT ENTERING AN INTEGER INTO A INTEGER HASHMAP
+                    return;
+                }
+
+                int val = Integer.parseInt(incrementKey);
+
+                if (integerMap.containsKey(val)) {
+                    integerMap.put(val, integerMap.get(val) + 1);
+                }
+                else {
+                    //TODO: ADD ERROR MESSAGE TO TELL THE USER KEY DOESN'T EXIST SO CANT INCREMENT IT
+                }
+                break;
+            }
+            case CharacterHashMap -> {
+                if (!checker.isCharacter(incrementKey)) {
+                    //TODO: SHOW ERROR MESSAGE FOR NOT ENTERING A CHARACTER INTO A CHARACTER HASHMAP
+                    return;
+                }
+
+                char character = incrementKey.charAt(0);
+
+
+                if (characterMap.containsKey(character)) {
+                    characterMap.put(character, characterMap.get(character) + 1);
+                }
+                else {
+                    //TODO: SHOW ERROR MESSAGE KEY DOESNT EXIST
+                }
+
+                break;
+            }
+            default -> {
+                //TODO: ADD ERROR MESSAGE FOR NOT BEING ABLE TO INCREMENT IN A HASHMAP THAT DOESNT EXIST
+            }
+        }
     }
 
     @FXML
@@ -197,7 +252,9 @@ public class HashMapController {
 
     @FXML
     private void onResetClick() {
-
+        map_panel.getChildren().clear();
+        currentMap = null;
+        currentNodePosition = 0;
     }
 
     @FXML
@@ -206,7 +263,7 @@ public class HashMapController {
     }
 
     @FXML
-    private void onBackClick() {
-
+    private void onBackClick(ActionEvent e) throws IOException {
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
     }
 }
