@@ -107,8 +107,6 @@ public class HashMapController {
         node.setLayoutY(startY - (currentNodePosition * NODE_HEIGHT));
 
         map_panel.getChildren().add(node);
-
-
     }
 
     private StackPane createNode() {
@@ -134,7 +132,44 @@ public class HashMapController {
     //This function will be used to print all the nodes again
     //FOR EXAMPLE WHEN THE USER REMOVES A KEY THAT IS IN BETWEEN THE HASHMAP
     private void printMap() {
-        //TODO: ADD CODE HERE NEXT
+        map_panel.getChildren().clear();
+        currentNodePosition = 0;
+
+        switch (currentMap) {
+            case StringHashMap -> {
+                for (Map.Entry<String, Integer> entry : stringMap.entrySet()) {
+                    StackPane node = createStringMapNode(entry.getKey(), entry.getValue());
+
+                    node.setLayoutX(startX);
+                    node.setLayoutY(startY - (currentNodePosition * NODE_HEIGHT));
+
+                    map_panel.getChildren().add(node);
+                    currentNodePosition++;
+                }
+            }
+            case IntegerHashMap -> {
+                for (Map.Entry<Integer, Integer> entry : integerMap.entrySet()) {
+                    StackPane node = createIntMapNode(entry.getKey(), entry.getValue());
+
+                    node.setLayoutX(startX);
+                    node.setLayoutY(startY - (currentNodePosition * NODE_HEIGHT));
+
+                    map_panel.getChildren().add(node);
+                    currentNodePosition++;
+                }
+            }
+            case CharacterHashMap -> {
+                for (Map.Entry<Character, Integer> entry : characterMap.entrySet()) {
+                    StackPane node = createCharacterMapNode(entry.getKey(), entry.getValue());
+
+                    node.setLayoutX(startX);
+                    node.setLayoutY(startY - (currentNodePosition * NODE_HEIGHT));
+
+                    map_panel.getChildren().add(node);
+                    currentNodePosition++;
+                }
+            }
+        }
     }
 
     private StackPane createIntMapNode(int value, int key) {
@@ -252,7 +287,58 @@ public class HashMapController {
 
     @FXML
     private void onDecrementClick() {
+        String decrementKey = decrementKeyField.getText();
 
+        switch (currentMap) {
+            case StringHashMap -> {
+                if (stringMap.containsKey(decrementKey)) {
+                    stringMap.put(decrementKey, stringMap.get(decrementKey) - 1);
+                }
+                else {
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Key Doesn't Exist", "Kay " + decrementKey + " doesn't exist");
+                    return;
+                }
+            }
+            case IntegerHashMap -> {
+
+                if (!checker.isInteger(decrementKey)) {
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Key Type", "Key type isn't an integer");
+                    return;
+                }
+
+                int val = Integer.parseInt(decrementKey);
+
+                if (integerMap.containsKey(val)) {
+                    integerMap.put(val, integerMap.get(val) - 1);
+                }
+                else {
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Key Doesn't Exist", "Key called " + decrementKey + " doesn't exist in the hashmap");
+                    return;
+                }
+            }
+            case CharacterHashMap -> {
+                if (!checker.isCharacter(decrementKey)) {
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Key Type", "Key of this type doesn't exist in a character hashmap");
+                    return;
+                }
+
+                char character = decrementKey.charAt(0);
+
+                if (characterMap.containsKey(character)) {
+                    characterMap.put(character, characterMap.get(character) - 1);
+                }
+                else {
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Key Doesn't Exist", "Key called " + character + " doesn't exist in the hashmap");
+                    return;
+                }
+            }
+            default -> {
+                ErrorMessage.showErrorMessage(map_screen, stage, "Hashmap Doesn't Exist", "Can't increment in a empty hashmap");
+                return;
+            }
+        }
+
+        printMap();
     }
 
     @FXML
