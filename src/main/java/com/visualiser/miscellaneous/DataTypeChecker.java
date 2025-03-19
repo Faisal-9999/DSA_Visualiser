@@ -2,13 +2,11 @@ package com.visualiser.miscellaneous;
 
 public class DataTypeChecker {
     public boolean isInteger(String input) {
-        try {
-            Integer.parseInt(input);
-            return true;
+        for (char c : input.toCharArray()) {
+            if (c < '0' || c > '9') return false;
         }
-        catch (NumberFormatException e) {
-            return false;
-        }
+
+        return true;
     }
 
     public boolean isCharacter(String input) {

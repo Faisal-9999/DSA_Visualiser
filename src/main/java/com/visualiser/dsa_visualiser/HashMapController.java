@@ -6,13 +6,11 @@ import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Line;
@@ -20,9 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -32,22 +28,20 @@ enum MapType {
     CharacterHashMap
 }
 
-//THE PREVIOUS ARRAYLIST HAS BEEN ABANDONED NOW DIFFERENT HASHMAPS WILL BE USED TO GET THE STACK NODES
-//BASICALLY WE JUST KEEP ADDING ON THE LOCATION OF EACH NODE BASED ON WHAT THEIR POSITION IS IN THE HASHMAP
-//THE PRINT MAP FUNCTION AND INSERT NODE FUNCTION WILL BE MAINLY UTILISING THIS METHOD
+//TODO: FIX INCREMENT LOGIC AND FIX INSERTION LOGIC CANT INSERT THE SAME KEY TWICE IF INSERTED THEN PREVIOUS KEY IS REPLACED WITH NEW ONE
+//TODO: FIX SWAPPED POSITIONS OF KEY AND VALUE
 
 public class HashMapController {
 
     private final double NODE_WIDTH = 150;
     private final double NODE_HEIGHT = 75;
 
-    private final double startX = 550;
-    private final double startY = 400;
-    private double currentNodePosition = 0;
+    private final double startX = 600;
+    private final double startY = 550;
 
-    private LinkedHashMap<String, Integer> stringMap = new LinkedHashMap<>();
-    private LinkedHashMap<Character, Integer> characterMap = new LinkedHashMap<>();
-    private LinkedHashMap<Integer, Integer> integerMap = new LinkedHashMap<>();
+    private final LinkedHashMap<String, Integer> stringMap = new LinkedHashMap<>();
+    private final LinkedHashMap<Character, Integer> characterMap = new LinkedHashMap<>();
+    private final LinkedHashMap<Integer, Integer> integerMap = new LinkedHashMap<>();
 
     private MapType currentMap = null;
 
@@ -93,47 +87,20 @@ public class HashMapController {
 
         if (checker.isInteger(input)) {
             int val = Integer.parseInt(input);
-            node = createIntMapNode(Integer.parseInt(input), Integer.parseInt(value));
+            createIntMapNode(Integer.parseInt(input), Integer.parseInt(value));
         } else if (checker.isCharacter(input)) {
             char c = input.charAt(0);
-            node = createCharacterMapNode(c, Integer.parseInt(value));
+            createCharacterMapNode(c, Integer.parseInt(value));
         } else {
-            node = createStringMapNode(input, Integer.parseInt(value));
+            createStringMapNode(input, Integer.parseInt(value));
         }
 
-        //TODO: ADD CODE HERE FOR ASSIGNING THE STARTING COORDINATES FOR X AND Y
-
-        node.setLayoutX(startX);
-        node.setLayoutY(startY - (currentNodePosition * NODE_HEIGHT));
-
-        map_panel.getChildren().add(node);
+        printMap();
     }
 
-    private StackPane createNode() {
-        Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
-        rectangle.setFill(Color.WHITE);
-        rectangle.setStroke(Color.BLACK);
-
-        Line dividerLine = new Line();
-        dividerLine.setStartX(0);
-        dividerLine.setEndX(0);
-        dividerLine.setStartY(0);
-        dividerLine.setEndY(NODE_HEIGHT);
-
-        dividerLine.setTranslateX(NODE_WIDTH / 2);
-        dividerLine.setStroke(Color.BLACK);
-
-        StackPane node = new StackPane();
-        node.getChildren().addAll(rectangle, dividerLine);
-
-        return node;
-    }
-
-    //This function will be used to print all the nodes again
-    //FOR EXAMPLE WHEN THE USER REMOVES A KEY THAT IS IN BETWEEN THE HASHMAP
     private void printMap() {
         map_panel.getChildren().clear();
-        currentNodePosition = 0;
+        int currentNodePosition = 0;
 
         switch (currentMap) {
             case StringHashMap -> {
@@ -180,15 +147,40 @@ public class HashMapController {
         if (currentMap == null)
             currentMap = MapType.IntegerHashMap;
 
-        StackPane IntegerNode = createNode();
+        StackPane node = new StackPane();
+        node.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
 
-        Label nodeKey = new Label("" + value);
-        Label nodeValue = new Label("" + key);
 
-        StackPane.setAlignment(nodeKey, Pos.CENTER_LEFT);
-        StackPane.setAlignment(nodeValue, Pos.CENTER_RIGHT);
+        Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
+        rectangle.setFill(Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
 
-        return IntegerNode;
+
+        HBox hBox = new HBox();
+        hBox.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
+        hBox.setAlignment(Pos.CENTER);
+
+
+        Label keyLabel = new Label(String.valueOf(key));
+        Label valueLabel = new Label(String.valueOf(value));
+        keyLabel.setPrefWidth(NODE_WIDTH / 2);
+        keyLabel.setAlignment(Pos.CENTER);
+        valueLabel.setPrefWidth(NODE_WIDTH / 2);
+        valueLabel.setAlignment(Pos.CENTER);
+
+        hBox.getChildren().addAll(valueLabel, keyLabel);
+
+
+        Line dividerLine = new Line(0, -NODE_HEIGHT / 2, 0, NODE_HEIGHT / 2);
+        dividerLine.setStroke(Color.BLACK);
+        dividerLine.setStrokeWidth(1);
+
+
+        node.getChildren().addAll(rectangle, hBox, dividerLine);
+
+        integerMap.put(key, value);
+
+        return node;
     }
 
     private StackPane createStringMapNode(String word, int key) {
@@ -199,15 +191,40 @@ public class HashMapController {
         if (currentMap == null)
             currentMap = MapType.StringHashMap;
 
-        StackPane StringNode = createNode();
+        StackPane node = new StackPane();
+        node.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
 
-        Label nodeKey = new Label(word);
-        Label nodeValue = new Label("" + key);
 
-        StackPane.setAlignment(nodeKey, Pos.CENTER_LEFT);
-        StackPane.setAlignment(nodeValue, Pos.CENTER_RIGHT);
+        Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
+        rectangle.setFill(Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
 
-        return StringNode;
+
+        HBox hBox = new HBox();
+        hBox.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
+        hBox.setAlignment(Pos.CENTER);
+
+
+        Label keyLabel = new Label(String.valueOf(key));
+        Label valueLabel = new Label(word);
+        keyLabel.setPrefWidth(NODE_WIDTH / 2);
+        keyLabel.setAlignment(Pos.CENTER);
+        valueLabel.setPrefWidth(NODE_WIDTH / 2);
+        valueLabel.setAlignment(Pos.CENTER);
+
+        hBox.getChildren().addAll(valueLabel, keyLabel);
+
+
+        Line dividerLine = new Line(0, -NODE_HEIGHT / 2, 0, NODE_HEIGHT / 2);
+        dividerLine.setStroke(Color.BLACK);
+        dividerLine.setStrokeWidth(1);
+
+
+        node.getChildren().addAll(rectangle, hBox, dividerLine);
+
+        stringMap.put(word, key);
+
+        return node;
     }
 
     private StackPane createCharacterMapNode(char c, int key) {
@@ -218,15 +235,40 @@ public class HashMapController {
         if (currentMap == null)
             currentMap = MapType.CharacterHashMap;
 
-        StackPane CharacterNode = createNode();
+        StackPane node = new StackPane();
+        node.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
 
-        Label nodeKey = new Label("" + c);
-        Label nodeValue = new Label("" + key);
 
-        StackPane.setAlignment(nodeKey, Pos.CENTER_LEFT);
-        StackPane.setAlignment(nodeValue, Pos.CENTER_RIGHT);
+        Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
+        rectangle.setFill(Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
 
-        return CharacterNode;
+
+        HBox hBox = new HBox();
+        hBox.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
+        hBox.setAlignment(Pos.CENTER);
+
+
+        Label keyLabel = new Label(String.valueOf(key));
+        Label valueLabel = new Label("" + c);
+        keyLabel.setPrefWidth(NODE_WIDTH / 2);
+        keyLabel.setAlignment(Pos.CENTER);
+        valueLabel.setPrefWidth(NODE_WIDTH / 2);
+        valueLabel.setAlignment(Pos.CENTER);
+
+        hBox.getChildren().addAll(valueLabel, keyLabel);
+
+
+        Line dividerLine = new Line(0, -NODE_HEIGHT / 2, 0, NODE_HEIGHT / 2);
+        dividerLine.setStroke(Color.BLACK);
+        dividerLine.setStrokeWidth(1);
+
+
+        node.getChildren().addAll(rectangle, hBox, dividerLine);
+
+        characterMap.put(c, key);
+
+        return node;
     }
 
     @FXML
@@ -239,7 +281,7 @@ public class HashMapController {
                     stringMap.put(incrementKey, stringMap.get(incrementKey) + 1);
                 }
                 else {
-                    ErrorMessage.showErrorMessage(map_screen, stage, "Key Doesn't Exist", "Kay " + incrementKey + " doesn't exist");
+                    ErrorMessage.showErrorMessage(map_screen, stage, "Key Doesn't Exist", "Key " + incrementKey + " doesn't exist");
                     return;
                 }
             }
@@ -345,7 +387,9 @@ public class HashMapController {
     private void onResetClick() {
         map_panel.getChildren().clear();
         currentMap = null;
-        currentNodePosition = 0;
+        stringMap.clear();
+        characterMap.clear();
+        integerMap.clear();
     }
 
     @FXML
