@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//TODO: REDO THIS COMPLETELY
+//TODO: Fix the remove function not finding the key
 
 public class HashMapController {
 
@@ -74,12 +74,42 @@ public class HashMapController {
 
     @FXML
     private void onIncrementClick() {
-        String incrementKey = incrementKeyField.getText();
+        try {
+            int key = Integer.parseInt(incrementKeyField.getText());
+
+            if (integerMap.containsKey(key))
+                integerMap.put(key, integerMap.get(key) + 1);
+            else {
+                ErrorMessage.showErrorMessage(map_screen, stage, "Key Not Found", key + " not found in the hashmap");
+                return;
+            }
+        }
+        catch (Exception e) {
+            ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Type Detected", "Key type can only be an integer");
+            return;
+        }
+
+        printMap();
     }
 
     @FXML
     private void onDecrementClick() {
-        String decrementKey = decrementKeyField.getText();
+        try {
+            int key = Integer.parseInt(decrementKeyField.getText());
+
+            if (integerMap.containsKey(key))
+                integerMap.put(key, integerMap.get(key) - 1);
+            else {
+                ErrorMessage.showErrorMessage(map_screen, stage, "Key Not Found", key + " not found in the hashmap");
+                return;
+            }
+        }
+        catch (Exception e) {
+            ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Type Detected", "Key type can only be an integer");
+            return;
+        }
+
+        printMap();
     }
 
     @FXML
@@ -91,6 +121,22 @@ public class HashMapController {
     @FXML
     private void onRemoveClick() {
 
+        try {
+            int key = Integer.parseInt(removeKeyField.getText());
+
+            if (integerMap.containsKey(key))
+                integerMap.remove(key);
+            else {
+                ErrorMessage.showErrorMessage(map_screen, stage, "Key Not Found", key + " not found in the hashmap");
+                return;
+            }
+        }
+        catch (Exception e) {
+            ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Type Detected", "Enter an integer in the remove key field");
+            return;
+        }
+
+        printMap();
     }
 
     @FXML
@@ -119,6 +165,9 @@ public class HashMapController {
     }
 
     private void printMap() {
+
+        map_panel.getChildren().clear();
+
         int position = 0;
 
         for (Map.Entry<Integer, Integer> set : integerMap.entrySet()) {
