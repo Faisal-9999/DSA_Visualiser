@@ -7,32 +7,31 @@ import javafx.scene.shape.Polygon;
 
 public class TreeNodeArrow extends Group {
     public TreeNodeArrow(StackPane parent, StackPane child, boolean isLeft, double nodeRadius) {
-        double px = parent.getLayoutX();
-        double py = parent.getLayoutY();
-        double cx = child.getLayoutX();
-        double cy = child.getLayoutY();
+        // 1. Get the center of each circle (StackPane is 2*nodeRadius wide/high).
+        double pxCenter = parent.getLayoutX() + nodeRadius;
+        double pyCenter = parent.getLayoutY() + nodeRadius;
+        double cxCenter = child.getLayoutX() + nodeRadius;
+        double cyCenter = child.getLayoutY() + nodeRadius;
 
-        double startX;
-        double startY;
-        double endX;
-        double endY;
+        // 2. Compute direction from parent center to child center.
+        double dx = cxCenter - pxCenter;
+        double dy = cyCenter - pyCenter;
+        double dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 0.0001) dist = 0.0001; // Avoid division by zero
 
-        // Left edge vs. right edge
-        if (isLeft) {
-            startX = px;
-            startY = py + nodeRadius;
-            endX = cx;
-            endY = cy + nodeRadius;
-        } else {
-            startX = px + 2 * nodeRadius;
-            startY = py + nodeRadius;
-            endX = cx + 2 * nodeRadius;
-            endY = cy + nodeRadius;
-        }
+        // 3. “Start” is on the boundary of the parent circle.
+        double startX = pxCenter + (dx * (nodeRadius / dist));
+        double startY = pyCenter + (dy * (nodeRadius / dist));
 
+        // 4. “End” is on the boundary of the child circle.
+        double endX = cxCenter - (dx * (nodeRadius / dist));
+        double endY = cyCenter - (dy * (nodeRadius / dist));
+
+        // 5. Draw the line
         Line line = new Line(startX, startY, endX, endY);
         line.setStrokeWidth(2);
 
+        // 6. Create and rotate the arrowhead so it “points” along the line
         Polygon arrowHead = new Polygon(
                 0.0, 0.0,
                 -6.0, -4.0,
@@ -46,5 +45,3 @@ public class TreeNodeArrow extends Group {
         getChildren().addAll(line, arrowHead);
     }
 }
-
-

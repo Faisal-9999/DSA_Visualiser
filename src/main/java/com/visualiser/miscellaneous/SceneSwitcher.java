@@ -24,7 +24,7 @@ public class SceneSwitcher {
         stage.show();
     }
     public static void back(ActionEvent e, Stage stage) throws IOException {
-        switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
+        switch_scene(e, stage, "/com/visualiser/data_structures/data_structure_choose_screen.fxml");
     }
 
 }

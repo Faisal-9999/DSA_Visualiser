@@ -1,17 +1,15 @@
-package com.visualiser.dsa_visualiser;
+package com.visualiser.data_structures;
 
 import com.visualiser.miscellaneous.Arrow;
 import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

@@ -1,4 +1,4 @@
-package com.visualiser.dsa_visualiser;
+package com.visualiser.data_structures;
 
 import com.visualiser.miscellaneous.SceneSwitcher;
 import com.visualiser.miscellaneous.TreeNodeArrow;
@@ -15,13 +15,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class TreeController {
+public class BinaryTreeController {
     private final int NODE_RADIUS = 35;
     private Stage stage;
     private Boolean isFirst = true;
     private final double startX = 625;
     private final double startY = 50;
-    Tree tree = new Tree();
+    BinaryTree tree = new BinaryTree();
 
     @FXML
     Pane Tree_panel;
@@ -45,7 +45,7 @@ public class TreeController {
             return;
         }
         tree.addNode(node);
-        Tree.SearchResult result = tree.search(node);
+        BinaryTree.SearchResult result = tree.search(node);
         if (result == null || result.parent == null) return;
         StackPane parent = result.parent;
         Boolean isLeft = result.isLeft;
@@ -87,7 +87,7 @@ public class TreeController {
     private void onResetClick() {
         Tree_panel.getChildren().clear();
         isFirst = true;
-        tree = new Tree();
+        tree = new BinaryTree();
     }
 
     @FXML

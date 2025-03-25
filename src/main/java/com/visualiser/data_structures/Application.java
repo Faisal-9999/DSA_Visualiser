@@ -1,4 +1,4 @@
-package com.visualiser.dsa_visualiser;
+package com.visualiser.data_structures;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

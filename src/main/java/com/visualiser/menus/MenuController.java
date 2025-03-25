@@ -1,4 +1,4 @@
-package com.visualiser.dsa_visualiser;
+package com.visualiser.menus;
 
 import com.visualiser.miscellaneous.SceneSwitcher;
 import javafx.event.ActionEvent;
@@ -16,7 +16,7 @@ public class MenuController {
 
     @FXML
     private void onStartClick(ActionEvent e) throws IOException {
-        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/dsa_visualiser/data_structure_choose_screen.fxml");
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/data_structureAndalgorithmChooseScreen.fxml");
     }
 
     @FXML

@@ -1,9 +1,10 @@
-package com.visualiser.dsa_visualiser;
+package com.visualiser.data_structures;
 
 import javafx.scene.layout.StackPane;
 import java.util.LinkedList;
 
-public class Tree {
+public class BinaryTree {
+
     private class Node {
         Node left;
         Node right;
@@ -14,6 +15,7 @@ public class Tree {
             this.right = null;
         }
     }
+
     private Node root = null;
 
     public void addNode(StackPane data) {
@@ -37,6 +39,7 @@ public class Tree {
             }
         }
     }
+
     public class SearchResult {
         public StackPane parent;
         public Boolean isLeft;
@@ -45,6 +48,7 @@ public class Tree {
             this.isLeft = isLeft;
         }
     }
+
     public SearchResult search(StackPane node) {
         LinkedList<Node> q = new LinkedList<>();
         q.add(root);

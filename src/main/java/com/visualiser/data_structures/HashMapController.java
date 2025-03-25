@@ -1,4 +1,4 @@
-package com.visualiser.dsa_visualiser;
+package com.visualiser.data_structures;
 
 import com.visualiser.miscellaneous.ErrorMessage;
 import com.visualiser.miscellaneous.SceneSwitcher;
@@ -31,7 +31,8 @@ public class HashMapController {
 
     private final LinkedHashMap<Integer, Integer> integerMap = new LinkedHashMap<>();
 
-    private final int MAX_KEYS = 12;
+    private final int MAX_KEYS = 8;
+    private int current_nodes = 0;
 
     @FXML
     public TextField insertKeyField;
@@ -61,6 +62,11 @@ public class HashMapController {
         String incrementKey = insertKeyField.getText();
         String valueKey = insertValueField.getText();
 
+        if (current_nodes >= MAX_KEYS) {
+            ErrorMessage.showErrorMessage(map_screen, stage, "Max Keys Limit Reached", "Can't add more than " + MAX_KEYS + " keys");
+            return;
+        }
+
         try {
             integerMap.put(Integer.parseInt(incrementKey), Integer.parseInt(valueKey));
         }
@@ -68,6 +74,8 @@ public class HashMapController {
             ErrorMessage.showErrorMessage(map_screen, stage, "Invalid Type Detected", "Enter an integer in the increment and value field");
             return;
         }
+
+        current_nodes++;
 
         printMap();
     }
