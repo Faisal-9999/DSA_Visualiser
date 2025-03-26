@@ -2,6 +2,7 @@ package com.visualiser.data_structures;
 
 import javafx.scene.layout.StackPane;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinaryTree {
 
@@ -17,6 +18,8 @@ public class BinaryTree {
     }
 
     private Node root = null;
+    private Boolean isBalanced = false;
+    private int depth = 0;
 
     public void addNode(StackPane data) {
         if (root == null) {
@@ -43,14 +46,54 @@ public class BinaryTree {
         }
     }
 
+    public int checkDepth(Node node) {
+        if (node == null) return 0;
+
+        int left = checkDepth(node.left);
+        int right = checkDepth(node.right);
+
+        return Math.max(left, right) + 1;
+    }
+
+    public void checkBalanced() {
+        if (root == null) {
+            isBalanced = true;
+            return;
+        }
+
+        Queue<Node> q = new LinkedList<>();
+
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+
+            for (int i = 0; i < size; i++) {
+                Node node = q.poll();
+                if (node.left != null && node.right == null) {
+                    isBalanced = false;
+                    return;
+                }
+                else if (node.left == null && node.right != null){
+                    isBalanced = false;
+                    return;
+                }
+                else {
+                    if (node.left != null) q.add(node.left);
+                    if (node.right != null) q.add(node.right);
+                }
+            }
+        }
+
+        isBalanced = true;
+    }
+
     public Integer getDepth() {
-        //TODO: ADD WORKING TO CHECK DEPTH OF TREE AFTER LEARNING IT
-        return null;
+        return depth;
     }
 
     public Boolean getIsBalanced() {
-        //TODO: ADD WORKING TO CHECK IF TREE IS BALANCED ACROSS ALL PATHS
-        return null;
+        return isBalanced;
     }
 
     public class SearchResult {
