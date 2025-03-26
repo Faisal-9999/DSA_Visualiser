@@ -99,6 +99,6 @@ public class QueueController {
 
     @FXML
     private void onBackClick(ActionEvent e) throws IOException {
-        SceneSwitcher.back(e, stage);
+        SceneSwitcher.backDataStructure(e, stage);
     }
 }

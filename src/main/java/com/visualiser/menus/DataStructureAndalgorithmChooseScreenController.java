@@ -16,17 +16,18 @@ public class DataStructureAndalgorithmChooseScreenController {
 
     @FXML
     private void onAlgorithmsClick(ActionEvent e) throws IOException {
-        SceneSwitcher.switch_scene(e, stage, "/com");
+//        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/algorithms_choose_screen.fxml");
+        //TODO: THIS WILL BE WORKED ON ONCE DATA STRUCTURE WORK IS COMPLETE
     }
 
     @FXML
-    private void onDataStructuresClick(ActionEvent e) {
-
+    private void onDataStructuresClick(ActionEvent e) throws IOException {
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/data_structure_choose_screen.fxml");
     }
 
     @FXML
-    private void onBackCLick(ActionEvent e) {
-
+    private void onBackClick(ActionEvent e) throws IOException {
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/main_menu.fxml");
     }
 }
 

@@ -38,11 +38,11 @@ public class DataStructureChooseScreenController {
 
     @FXML
     private void onBackClick(ActionEvent e) throws IOException {
-        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/.data_structureAndalgorithmChooseScreen.fxml");
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/data_structureAndalgorithmChooseScreen.fxml");
     }
 
     @FXML
     private void onHashMapClick(ActionEvent e) throws IOException {
-        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/data_structures/hashmap.fxml");
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/hashmap.fxml");
     }
 }

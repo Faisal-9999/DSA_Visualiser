@@ -23,8 +23,13 @@ public class SceneSwitcher {
         stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("esc"));
         stage.show();
     }
-    public static void back(ActionEvent e, Stage stage) throws IOException {
-        switch_scene(e, stage, "/com/visualiser/data_structures/data_structure_choose_screen.fxml");
+
+    public static void backDataStructure(ActionEvent e, Stage stage) throws IOException {
+        switch_scene(e, stage, "/com/visualiser/GUI/data_structure_choose_screen.fxml");
+    }
+
+    public static void backAlgorithms(ActionEvent e, Stage stage) throws IOException {
+        switch_scene(e, stage, "/com/visualiser/GUI/algorithms_choose_screen.fxml");
     }
 
 }

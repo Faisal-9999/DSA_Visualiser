@@ -124,6 +124,7 @@ public class HashMapController {
     private void onResetClick() {
         map_panel.getChildren().clear();
         integerMap.clear();
+        current_nodes = 0;
     }
 
     @FXML
@@ -149,7 +150,7 @@ public class HashMapController {
 
     @FXML
     private void onBackClick(ActionEvent e) throws IOException {
-        SceneSwitcher.back(e, stage);
+        SceneSwitcher.backDataStructure(e, stage);
     }
 
     private StackPane[] createNode(int key, int value) {

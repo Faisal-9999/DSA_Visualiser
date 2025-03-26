@@ -23,8 +23,11 @@ public class BinaryTree {
             root = new Node(data);
             return;
         }
+
         LinkedList<Node> q = new LinkedList<>();
+
         q.add(root);
+
         while (!q.isEmpty()) {
             Node current = q.poll();
             if (current.left == null) {
@@ -38,6 +41,16 @@ public class BinaryTree {
                 q.add(current.right);
             }
         }
+    }
+
+    public Integer getDepth() {
+        //TODO: ADD WORKING TO CHECK DEPTH OF TREE AFTER LEARNING IT
+        return null;
+    }
+
+    public Boolean getIsBalanced() {
+        //TODO: ADD WORKING TO CHECK IF TREE IS BALANCED ACROSS ALL PATHS
+        return null;
     }
 
     public class SearchResult {

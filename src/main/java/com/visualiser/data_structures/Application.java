@@ -15,13 +15,10 @@ public class Application extends javafx.application.Application {
     //COMPLETED LINKED LIST LOGIC
     //COMPLETED STACK AND QUEUE
 
-    //TODO: START WORK ON GENERIC TREE LOGIC
-    //TODO: FIX COLLISIONS
-    //TODO: KEEP MAX DEPTH TO 2 OR 3
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("main_menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/com/visualiser/GUI/main_menu.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("DSA Visualiser");
         stage.setScene(scene);
