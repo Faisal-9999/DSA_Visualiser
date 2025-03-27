@@ -1,5 +1,6 @@
 package com.visualiser.data_structures;
 
+import com.visualiser.miscellaneous.ErrorMessage;
 import com.visualiser.miscellaneous.SceneSwitcher;
 import com.visualiser.miscellaneous.TreeNodeArrow;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BinaryTreeController {
     private final int NODE_RADIUS = 35;
@@ -21,7 +23,10 @@ public class BinaryTreeController {
     private Boolean isFirst = true;
     private final double startX = 625;
     private final double startY = 50;
+
     BinaryTree tree = new BinaryTree();
+
+    ArrayList<Integer> treeNodes = new ArrayList<>();
 
     @FXML
     Pane Tree_panel;
@@ -32,42 +37,52 @@ public class BinaryTreeController {
     @FXML
     TextField delete_field, add_field;
 
+    //TODO: ADD A FUNCTION FOR PRINTING THE WHOLE TREE AGAIN AFTER REMOVING ONE NODE
+    //TODO:
+
     @FXML
     private void onAddClick() {
-        int value = Integer.parseInt(add_field.getText());
-        StackPane node = createNode(value);
-        if (isFirst) {
-            node.setLayoutX(startX);
-            node.setLayoutY(startY);
+        try {
+            int value = Integer.parseInt(add_field.getText());
+            StackPane node = createNode(value);
+
+            treeNodes.add(value);
+
+            if (isFirst) {
+                node.setLayoutX(startX);
+                node.setLayoutY(startY);
+                tree.addNode(node);
+                Tree_panel.getChildren().add(node);
+                isFirst = false;
+                return;
+            }
             tree.addNode(node);
+            BinaryTree.SearchResult result = tree.search(node);
+            if (result == null || result.parent == null) return;
+            StackPane parent = result.parent;
+            Boolean isLeft = result.isLeft;
+
+            double parentX = parent.getLayoutX();
+            double parentY = parent.getLayoutY();
+            double verticalOffset = 100;
+            double horizontalOffset = 100;
+
+            if (isLeft) {
+                node.setLayoutX(parentX - horizontalOffset);
+                node.setLayoutY(parentY + verticalOffset);
+            } else {
+                node.setLayoutX(parentX + horizontalOffset);
+                node.setLayoutY(parentY + verticalOffset);
+            }
+
+            TreeNodeArrow arrow = new TreeNodeArrow(parent, node, isLeft, NODE_RADIUS);
+            Tree_panel.getChildren().add(arrow);
+
             Tree_panel.getChildren().add(node);
-            isFirst = false;
-            return;
         }
-        tree.addNode(node);
-        BinaryTree.SearchResult result = tree.search(node);
-        if (result == null || result.parent == null) return;
-        StackPane parent = result.parent;
-        Boolean isLeft = result.isLeft;
-
-        double parentX = parent.getLayoutX();
-        double parentY = parent.getLayoutY();
-        double verticalOffset = 100;
-        double horizontalOffset = 100;
-
-        if (isLeft) {
-            node.setLayoutX(parentX - horizontalOffset);
-            node.setLayoutY(parentY + verticalOffset);
-        } else {
-            node.setLayoutX(parentX + horizontalOffset);
-            node.setLayoutY(parentY + verticalOffset);
+        catch (Exception e) {
+            ErrorMessage.showErrorMessage(Tree_screen, stage, "Invalid Argument Type", "Node argument can only be an integer");
         }
-
-        // Draw the new arrow
-        TreeNodeArrow arrow = new TreeNodeArrow(parent, node, isLeft, NODE_RADIUS);
-        Tree_panel.getChildren().add(arrow);
-
-        Tree_panel.getChildren().add(node);
     }
 
     private StackPane createNode(int value) {
@@ -81,6 +96,35 @@ public class BinaryTreeController {
 
     @FXML
     private void onDeleteClick() {
+        Integer val = null;
+
+        try {
+            val = Integer.parseInt(delete_field.getText());
+        }
+        catch (Exception e) {
+            ErrorMessage.showErrorMessage(Tree_screen, stage, "Invalid Argument Type", "Argument needs to be an integer");
+            return;
+        }
+
+        if (!treeNodes.contains(val)) {
+            ErrorMessage.showErrorMessage(Tree_screen, stage, "Can't Delete Argument", "Argument doesn't exist in tree");
+            return;
+        }
+
+        treeNodes.remove(val);
+
+        tree = new BinaryTree();
+        isFirst = true;
+        Tree_panel.getChildren().clear();
+
+
+        /*
+        TODO: ADD CODE FOR CREATING STACKPANES FOR EACH VALUE AND RE-ADDING THEM TO THE TREE ONE BY ONE
+          NOW THAT THE VALUE TO BE REMOVED HAS BEEN DELETED FROM THE LIST OF INTEGERS
+          WE WILL JUST RECREATE THE TREE FROM THE REMAINING NODES YOU WILL NEED TO
+          CREATE SOMETHING LIKE THE CODE IN THE ON ADD CLICK FUNCTION AND USE THE CREATE NODE FUNCTION FOR THIS
+          TASK
+         */
     }
 
     @FXML
@@ -88,6 +132,7 @@ public class BinaryTreeController {
         Tree_panel.getChildren().clear();
         isFirst = true;
         tree = new BinaryTree();
+        treeNodes.clear();
     }
 
     @FXML
