@@ -2,6 +2,7 @@ module com.visualiser.data_structures {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires jdk.compiler;
 
 
     opens com.visualiser.data_structures to javafx.fxml;

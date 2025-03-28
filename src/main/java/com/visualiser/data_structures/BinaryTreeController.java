@@ -14,75 +14,59 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinaryTreeController {
     private final int NODE_RADIUS = 35;
     private Stage stage;
-    private Boolean isFirst = true;
-    private final double startX = 625;
     private final double startY = 50;
-
     BinaryTree tree = new BinaryTree();
-
     ArrayList<Integer> treeNodes = new ArrayList<>();
-
     @FXML
     Pane Tree_panel;
-
     @FXML
     AnchorPane Tree_screen;
-
     @FXML
     TextField delete_field, add_field;
 
-    //TODO: ADD A FUNCTION FOR PRINTING THE WHOLE TREE AGAIN AFTER REMOVING ONE NODE
-    //TODO:
+    @FXML
+    private void initialize() {
+        Tree_panel.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> obs, Number oldVal, Number newVal) {
+                updatePositions();
+            }
+        });
+    }
 
     @FXML
     private void onAddClick() {
+
+        Integer value = null;
+
         try {
-            int value = Integer.parseInt(add_field.getText());
-            StackPane node = createNode(value);
-
-            treeNodes.add(value);
-
-            if (isFirst) {
-                node.setLayoutX(startX);
-                node.setLayoutY(startY);
-                tree.addNode(node);
-                Tree_panel.getChildren().add(node);
-                isFirst = false;
-                return;
-            }
-            tree.addNode(node);
-            BinaryTree.SearchResult result = tree.search(node);
-            if (result == null || result.parent == null) return;
-            StackPane parent = result.parent;
-            Boolean isLeft = result.isLeft;
-
-            double parentX = parent.getLayoutX();
-            double parentY = parent.getLayoutY();
-            double verticalOffset = 100;
-            double horizontalOffset = 100;
-
-            if (isLeft) {
-                node.setLayoutX(parentX - horizontalOffset);
-                node.setLayoutY(parentY + verticalOffset);
-            } else {
-                node.setLayoutX(parentX + horizontalOffset);
-                node.setLayoutY(parentY + verticalOffset);
-            }
-
-            TreeNodeArrow arrow = new TreeNodeArrow(parent, node, isLeft, NODE_RADIUS);
-            Tree_panel.getChildren().add(arrow);
-
-            Tree_panel.getChildren().add(node);
+            value = Integer.parseInt(add_field.getText());
         }
         catch (Exception e) {
             ErrorMessage.showErrorMessage(Tree_screen, stage, "Invalid Argument Type", "Node argument can only be an integer");
+            return;
         }
+
+        if (treeNodes.size() >= 31) {
+            ErrorMessage.showErrorMessage(Tree_screen, stage, "Max Depth Reached", "Tree can't exceed a depth of 5");
+            return;
+        }
+
+        StackPane node = createNode(value);
+        treeNodes.add(value);
+        tree.addNode(node);
+        Tree_panel.getChildren().add(node);
+        updatePositions();
     }
 
     private StackPane createNode(int value) {
@@ -96,71 +80,31 @@ public class BinaryTreeController {
 
     @FXML
     private void onDeleteClick() {
-        Integer val = null;
-
+        Integer val;
         try {
             val = Integer.parseInt(delete_field.getText());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ErrorMessage.showErrorMessage(Tree_screen, stage, "Invalid Argument Type", "Argument needs to be an integer");
             return;
         }
-
         if (!treeNodes.contains(val)) {
             ErrorMessage.showErrorMessage(Tree_screen, stage, "Can't Delete Argument", "Argument doesn't exist in tree");
             return;
         }
-
         treeNodes.remove(val);
-
         tree = new BinaryTree();
-        isFirst = true;
         Tree_panel.getChildren().clear();
-
         for (Integer value : treeNodes) {
-
             StackPane node = createNode(value);
-
-            if (isFirst) {
-                node.setLayoutX(startX);
-                node.setLayoutY(startY);
-                tree.addNode(node);
-                Tree_panel.getChildren().add(node);
-                isFirst = false;
-                continue;
-            }
-
             tree.addNode(node);
-            BinaryTree.SearchResult result = tree.search(node);
-            if (result == null || result.parent == null) return;
-            StackPane parent = result.parent;
-            Boolean isLeft = result.isLeft;
-
-            double parentX = parent.getLayoutX();
-            double parentY = parent.getLayoutY();
-            double verticalOffset = 100;
-            double horizontalOffset = 100;
-
-            if (isLeft) {
-                node.setLayoutX(parentX - horizontalOffset);
-                node.setLayoutY(parentY + verticalOffset);
-            } else {
-                node.setLayoutX(parentX + horizontalOffset);
-                node.setLayoutY(parentY + verticalOffset);
-            }
-
-            TreeNodeArrow arrow = new TreeNodeArrow(parent, node, isLeft, NODE_RADIUS);
-            Tree_panel.getChildren().add(arrow);
-
             Tree_panel.getChildren().add(node);
         }
-
+        updatePositions();
     }
 
     @FXML
     private void onResetClick() {
         Tree_panel.getChildren().clear();
-        isFirst = true;
         tree = new BinaryTree();
         treeNodes.clear();
     }
@@ -168,5 +112,60 @@ public class BinaryTreeController {
     @FXML
     private void onBackClick(ActionEvent e) throws IOException {
         SceneSwitcher.backDataStructure(e, stage);
+    }
+
+    private void updatePositions() {
+        double availableWidth = Tree_panel.getWidth();
+        if (availableWidth <= 0) {
+            availableWidth = 1024;
+        }
+
+        double verticalGap = 100;
+        Queue<BinaryTree.Node> queue = new LinkedList<>();
+
+        if (tree.getRootNode() == null) return;
+
+        queue.add(tree.getRootNode());
+        int level = 0;
+
+        while (!queue.isEmpty()) {
+            int count = queue.size();
+
+            ArrayList<BinaryTree.Node> levelNodes = new ArrayList<>();
+
+            for (int i = 0; i < count; i++) {
+                BinaryTree.Node current = queue.poll();
+                levelNodes.add(current);
+                if (current.left != null) queue.add(current.left);
+                if (current.right != null) queue.add(current.right);
+            }
+
+            double spacing = availableWidth / (count + 1);
+
+            for (int i = 0; i < levelNodes.size(); i++) {
+                BinaryTree.Node current = levelNodes.get(i);
+                double x = spacing * (i + 1);
+                double y = startY + level * verticalGap;
+                current.data.setLayoutX(x);
+                current.data.setLayoutY(y);
+            }
+            level++;
+        }
+        Tree_panel.getChildren().removeIf(child -> child instanceof TreeNodeArrow);
+        drawArrows(tree.getRootNode());
+    }
+
+    private void drawArrows(BinaryTree.Node node) {
+        if (node == null) return;
+        if (node.left != null) {
+            TreeNodeArrow arrowLeft = new TreeNodeArrow(node.data, node.left.data, true, NODE_RADIUS);
+            Tree_panel.getChildren().add(arrowLeft);
+            drawArrows(node.left);
+        }
+        if (node.right != null) {
+            TreeNodeArrow arrowRight = new TreeNodeArrow(node.data, node.right.data, false, NODE_RADIUS);
+            Tree_panel.getChildren().add(arrowRight);
+            drawArrows(node.right);
+        }
     }
 }
