@@ -117,14 +117,44 @@ public class BinaryTreeController {
         isFirst = true;
         Tree_panel.getChildren().clear();
 
+        for (Integer value : treeNodes) {
 
-        /*
-        TODO: ADD CODE FOR CREATING STACKPANES FOR EACH VALUE AND RE-ADDING THEM TO THE TREE ONE BY ONE
-          NOW THAT THE VALUE TO BE REMOVED HAS BEEN DELETED FROM THE LIST OF INTEGERS
-          WE WILL JUST RECREATE THE TREE FROM THE REMAINING NODES YOU WILL NEED TO
-          CREATE SOMETHING LIKE THE CODE IN THE ON ADD CLICK FUNCTION AND USE THE CREATE NODE FUNCTION FOR THIS
-          TASK
-         */
+            StackPane node = createNode(value);
+
+            if (isFirst) {
+                node.setLayoutX(startX);
+                node.setLayoutY(startY);
+                tree.addNode(node);
+                Tree_panel.getChildren().add(node);
+                isFirst = false;
+                continue;
+            }
+
+            tree.addNode(node);
+            BinaryTree.SearchResult result = tree.search(node);
+            if (result == null || result.parent == null) return;
+            StackPane parent = result.parent;
+            Boolean isLeft = result.isLeft;
+
+            double parentX = parent.getLayoutX();
+            double parentY = parent.getLayoutY();
+            double verticalOffset = 100;
+            double horizontalOffset = 100;
+
+            if (isLeft) {
+                node.setLayoutX(parentX - horizontalOffset);
+                node.setLayoutY(parentY + verticalOffset);
+            } else {
+                node.setLayoutX(parentX + horizontalOffset);
+                node.setLayoutY(parentY + verticalOffset);
+            }
+
+            TreeNodeArrow arrow = new TreeNodeArrow(parent, node, isLeft, NODE_RADIUS);
+            Tree_panel.getChildren().add(arrow);
+
+            Tree_panel.getChildren().add(node);
+        }
+
     }
 
     @FXML

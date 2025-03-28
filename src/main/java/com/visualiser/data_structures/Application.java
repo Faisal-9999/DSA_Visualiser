@@ -14,6 +14,7 @@ public class Application extends javafx.application.Application {
     //exit button is functioning
     //COMPLETED LINKED LIST LOGIC
     //COMPLETED STACK AND QUEUE
+    //COMPLETED HASHMAP
 
 
     @Override
