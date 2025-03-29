@@ -32,8 +32,8 @@ public class DataStructureChooseScreenController {
     }
 
     @FXML
-    private void onBSTClick(ActionEvent e) {
-
+    private void onBSTClick(ActionEvent e) throws IOException {
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/BinarySearchTree.fxml");
     }
 
     @FXML
