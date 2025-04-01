@@ -16,7 +16,6 @@ public class Application extends javafx.application.Application {
     //COMPLETED STACK AND QUEUE
     //COMPLETED HASHMAP
 
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/com/visualiser/GUI/main_menu.fxml"));
