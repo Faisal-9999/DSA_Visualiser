@@ -7,6 +7,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
@@ -20,7 +25,14 @@ public class BubbleSortController {
 
     private BubbleSorter sorter = null;
 
+    @FXML
     private Stage stage;
+
+    private boolean running = true;
+
+    private final double NODE_WIDTH = 75;
+    private final double NODE_HEIGHT = 75;
+
     @FXML
     private AnchorPane bubble_screen;
 
@@ -31,7 +43,7 @@ public class BubbleSortController {
     TextField elementsNumberField;
 
     @FXML
-    void onNumberOfElementsClick() {
+    void onNumberOfElementsClick() throws InterruptedException {
 
         Integer numOfElements = null;
 
@@ -53,7 +65,7 @@ public class BubbleSortController {
 
                 TextInputDialog dialog = new TextInputDialog();
                 dialog.setTitle("Element Input");
-                dialog.setHeaderText("Enter element " + (i + 1) + " of " + numOfElements);
+                dialog.setHeaderText("Enter element #" + (i + 1));
                 dialog.setContentText("Please enter an integer:");
 
                 Optional<String> result = dialog.showAndWait();
@@ -67,18 +79,50 @@ public class BubbleSortController {
                         ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Element", "Please enter a valid integer.");
                     }
                 } else {
-                    ErrorMessage.showErrorMessage(bubble_screen, stage, "Input Interrupted", "");
                     return;
                 }
             }
 
         }
 
+        start();
+
     }
 
-    void start() {
+    private void start() throws InterruptedException {
         sorter = BubbleSorter.bubbleSorterBuilder(elements);
         sorter.start();
+
+        while (running) {
+
+            sorter.join();
+            Thread.sleep(550);
+
+            elements = new ArrayList<>();
+            elements.addAll(sorter.getElements());
+            printArray();
+        }
+    }
+
+    private void printArray() {
+        double startX = 350;
+        double startY = 500;
+
+        for (int i = 0; i < elements.size(); i++) {
+            StackPane node = createNode(elements.indexOf(i));
+            node.setLayoutY(startY);
+            node.setLayoutX(startX + (NODE_WIDTH * i));
+            bubble_panel.getChildren().add(node);
+        }
+    }
+
+    private StackPane createNode(int value) {
+        Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
+        rectangle.setFill(Color.WHITE);
+        rectangle.setStroke(Color.BLACK);
+        Text label = new Text(String.valueOf(value));
+        label.setFont(Font.font("Sans", 14));
+        return new StackPane(rectangle, label);
     }
 
     @FXML

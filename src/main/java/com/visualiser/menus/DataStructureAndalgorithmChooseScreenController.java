@@ -16,8 +16,7 @@ public class DataStructureAndalgorithmChooseScreenController {
 
     @FXML
     private void onAlgorithmsClick(ActionEvent e) throws IOException {
-//        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/algorithms_choose_screen.fxml");
-        //TODO: THIS WILL BE WORKED ON ONCE DATA STRUCTURE WORK IS COMPLETE
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/algorithms_choose_screen.fxml");
     }
 
     @FXML
