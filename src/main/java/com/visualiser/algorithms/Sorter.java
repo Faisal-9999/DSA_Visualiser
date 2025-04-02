@@ -1,16 +1,18 @@
 package com.visualiser.algorithms;
 
+import java.util.ArrayList;
+
 public abstract class Sorter extends Thread {
 
-    protected int[] elements = null;
+    protected ArrayList<Integer> elements = null;
 
-    protected Sorter(int[] elements) {
-
+    protected Sorter(ArrayList<Integer> elements) {
+        this.elements = elements;
     }
 
     protected Sorter() {}
 
-    public int[] getElements() {
-        return elements.clone();
+    public ArrayList<Integer> getElements() {
+        return elements;
     }
 }

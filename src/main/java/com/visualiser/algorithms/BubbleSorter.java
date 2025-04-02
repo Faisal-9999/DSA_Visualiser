@@ -1,5 +1,7 @@
 package com.visualiser.algorithms;
 
+import java.util.ArrayList;
+
 public class BubbleSorter extends Sorter {
 
     //TODO: MAKE A COMPLETE ROADMAP ON HOW THE CODE SHOULD WORK BEFORE IMPLEMENTING ANUTHING THIS IS BECOMING CONFUSING
@@ -8,28 +10,16 @@ public class BubbleSorter extends Sorter {
     boolean isSorted = true;
     int counter = 0;
 
-    private BubbleSorter(int[] elements) {
+    private BubbleSorter(ArrayList<Integer> elements) {
         super(elements);
-    }
-
-    private void sort() {
-        for (int i = 0; i < elements.length - 1; i++) {
-            for (int j = 0; j < elements.length - 1 - i; j++) {
-                if (elements[j] > elements[j + 1]) {
-                    int temp = elements[j];
-                    elements[j] = elements[j + 1];
-                    elements[j + 1] = temp;
-                }
-            }
-        }
     }
 
     private BubbleSorter() {
         super();
     }
 
-    public static BubbleSorter bubbleSorterBuilder(int[] arr) throws RuntimeException {
-        if (arr.length == 0) {
+    public static BubbleSorter bubbleSorterBuilder(ArrayList<Integer> arr) throws RuntimeException {
+        if (arr.size() == 0) {
             throw new RuntimeException("Entered Empty Array");
         }
 
@@ -38,16 +28,20 @@ public class BubbleSorter extends Sorter {
 
     @Override
     public void run() {
-        for (int i = 0; i < elements.length - 1; i++) {
-            if (elements[i + 1] < elements[i]) {
-                isSorted = false;
-                break;
+        for (int i = 0; i < elements.size() - 1; i++) {
+            for (int j = 0; j < elements.size() - 1 - i; j++) {
+                if (elements.indexOf(j + 1) < elements.indexOf(j)) {
+                    int temp = elements.indexOf(j);
+                    elements.set(j, elements.indexOf(j + 1));
+                    elements.set(j + 1, temp);
+                }
+                try {
+                    Thread.sleep(500);
+                }
+                catch (Exception e) {
+                    throw new RuntimeException("Error putting thread to sleep");
+                }
             }
         }
-
-        if (isSorted) {
-            return;
-        }
-
     }
 }
