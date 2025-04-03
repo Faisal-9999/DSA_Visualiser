@@ -28,6 +28,8 @@ public class BubbleSortController {
     @FXML
     private Stage stage;
 
+    //TODO MAKE SHIT APPEAR ON SCREEN
+
     private boolean running = true;
 
     private final double NODE_WIDTH = 75;
@@ -78,15 +80,12 @@ public class BubbleSortController {
                     } catch (NumberFormatException ex) {
                         ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Element", "Please enter a valid integer.");
                     }
-                } else {
+                } else
                     return;
-                }
             }
-
         }
 
         start();
-
     }
 
     private void start() throws InterruptedException {

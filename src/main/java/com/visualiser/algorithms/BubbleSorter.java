@@ -6,9 +6,6 @@ public class BubbleSorter extends Sorter {
 
     //TODO: TEST POSITIONING AND MAKE SHIT APPEAR ON SCREEN NOW
 
-    boolean isSorted = true;
-    int counter = 0;
-
     private BubbleSorter(ArrayList<Integer> elements) {
         super(elements);
     }
