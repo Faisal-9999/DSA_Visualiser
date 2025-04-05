@@ -2,7 +2,9 @@ package com.visualiser.algorithms;
 
 import com.visualiser.miscellaneous.ErrorMessage;
 import com.visualiser.miscellaneous.SceneSwitcher;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
@@ -22,18 +24,11 @@ import java.util.Optional;
 public class BubbleSortController {
 
     private ArrayList<Integer> elements = null;
-
-    private BubbleSorter sorter = null;
+    private final double NODE_WIDTH = 75;
+    private final double NODE_HEIGHT = 75;
 
     @FXML
     private Stage stage;
-
-    //TODO MAKE SHIT APPEAR ON SCREEN
-
-    private boolean running = true;
-
-    private final double NODE_WIDTH = 75;
-    private final double NODE_HEIGHT = 75;
 
     @FXML
     private AnchorPane bubble_screen;
@@ -42,96 +37,115 @@ public class BubbleSortController {
     private Pane bubble_panel;
 
     @FXML
-    TextField elementsNumberField;
+    private TextField elementsNumberField;
 
     @FXML
-    void onNumberOfElementsClick() throws InterruptedException {
+    private Label writeableArea;
 
-        Integer numOfElements = null;
-
+    @FXML
+    private void onNumberOfElementsClick() {
+        Integer numOfElements;
         try {
             numOfElements = Integer.parseInt(elementsNumberField.getText());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Data Type", "Argument can only be an integer");
             return;
         }
-
         elements = new ArrayList<>();
-
         for (int i = 0; i < numOfElements; i++) {
-
             boolean validInput = false;
-
             while (!validInput) {
-
                 TextInputDialog dialog = new TextInputDialog();
                 dialog.setTitle("Element Input");
                 dialog.setHeaderText("Enter element #" + (i + 1));
                 dialog.setContentText("Please enter an integer:");
-
                 Optional<String> result = dialog.showAndWait();
-
-                if (result.isPresent()) {
-                    try {
-                        int element = Integer.parseInt(result.get().trim());
-                        elements.add(element);
-                        validInput = true;
-                    } catch (NumberFormatException ex) {
-                        ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Element", "Please enter a valid integer.");
-                    }
-                } else
+                if (result.isEmpty()) {
                     return;
+                }
+                try {
+                    int element = Integer.parseInt(result.get().trim());
+                    elements.add(element);
+                    validInput = true;
+                } catch (NumberFormatException ex) {
+                    ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Element", "Please enter a valid integer.");
+                }
             }
         }
-
         start();
     }
 
-    private void start() throws InterruptedException {
-        sorter = BubbleSorter.bubbleSorterBuilder(elements);
-        sorter.start();
-
-        while (running) {
-
-            sorter.join();
-            Thread.sleep(550);
-
-            elements = new ArrayList<>();
-            elements.addAll(sorter.getElements());
-            printArray();
-        }
+    private void start() {
+        new Thread(() -> {
+            Platform.runLater(() -> {
+                writeableArea.setText("Starting Bubble Sort");
+                drawElements();
+            });
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                Platform.runLater(() -> ErrorMessage.showErrorMessage(bubble_screen, stage, "Error Starting", String.valueOf(e)));
+                return;
+            }
+            for (int i = 0; i < elements.size() - 1; i++) {
+                for (int j = 0; j < elements.size() - 1 - i; j++) {
+                    if (elements.get(j) > elements.get(j + 1)) {
+                        int firstValue = elements.get(j);
+                        int secondValue = elements.get(j + 1);
+                        int temp = firstValue;
+                        elements.set(j, secondValue);
+                        elements.set(j + 1, temp);
+                        Platform.runLater(() -> writeableArea.setText("Swapped " + firstValue + " with " + secondValue));
+                    } else {
+                        int finalJ = j;
+                        int finalJ1 = j;
+                        Platform.runLater(() -> writeableArea.setText("No swap needed for indices " + finalJ + " and " + (finalJ1 + 1)));
+                    }
+                    Platform.runLater(this::drawElements);
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        Platform.runLater(() -> ErrorMessage.showErrorMessage(bubble_screen, stage, "Thread Error", String.valueOf(e)));
+                        return;
+                    }
+                }
+            }
+            Platform.runLater(() -> writeableArea.setText("Sorting Completed"));
+        }).start();
     }
 
-    private void printArray() {
-        double startX = 350;
-        double startY = 500;
-
+    private void drawElements() {
+        bubble_panel.getChildren().clear();
         for (int i = 0; i < elements.size(); i++) {
-            StackPane node = createNode(elements.indexOf(i));
-            node.setLayoutY(startY);
-            node.setLayoutX(startX + (NODE_WIDTH * i));
+            int value = elements.get(i);
+            StackPane node = new StackPane();
+            Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
+            rectangle.setFill(Color.CORNFLOWERBLUE);
+            rectangle.setArcHeight(10);
+            rectangle.setArcWidth(10);
+            Text number = new Text(String.valueOf(value));
+            number.setFont(Font.font(20));
+            number.setFill(Color.WHITE);
+            node.getChildren().addAll(rectangle, number);
+            node.setLayoutX(450 + (i * (NODE_WIDTH + 10)));
+            node.setLayoutY(300);
             bubble_panel.getChildren().add(node);
         }
     }
 
-    private StackPane createNode(int value) {
-        Rectangle rectangle = new Rectangle(NODE_WIDTH, NODE_HEIGHT);
-        rectangle.setFill(Color.WHITE);
-        rectangle.setStroke(Color.BLACK);
-        Text label = new Text(String.valueOf(value));
-        label.setFont(Font.font("Sans", 14));
-        return new StackPane(rectangle, label);
+    @FXML
+    private void onResetClick() {
+        bubble_panel.getChildren().clear();
+        elements = new ArrayList<>();
+        writeableArea.setText("");
     }
 
     @FXML
-    void onBackClick(ActionEvent e) {
+    private void onBackClick(ActionEvent e) {
         try {
             SceneSwitcher.backAlgorithms(e, stage);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             ErrorMessage.showErrorMessage(bubble_screen, stage, "Error Backing", String.valueOf(ex));
         }
     }
-
 }
