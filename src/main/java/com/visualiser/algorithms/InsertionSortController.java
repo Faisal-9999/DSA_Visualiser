@@ -31,10 +31,10 @@ public class InsertionSortController {
     private Stage stage;
 
     @FXML
-    private AnchorPane bubble_screen;
+    private AnchorPane insertion_screen;
 
     @FXML
-    private Pane bubble_panel;
+    private Pane insertion_panel;
 
     @FXML
     private TextField elementsNumberField;
@@ -50,7 +50,7 @@ public class InsertionSortController {
         try {
             numOfElements = Integer.parseInt(elementsNumberField.getText());
         } catch (Exception e) {
-            ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Data Type", "Argument can only be an integer");
+            ErrorMessage.showErrorMessage(insertion_screen, stage, "Invalid Data Type", "Argument can only be an integer");
             return;
         }
         elements = new ArrayList<>();
@@ -70,7 +70,7 @@ public class InsertionSortController {
                     elements.add(element);
                     validInput = true;
                 } catch (NumberFormatException ex) {
-                    ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Element", "Please enter a valid integer.");
+                    ErrorMessage.showErrorMessage(insertion_screen, stage, "Invalid Element", "Please enter a valid integer.");
                 }
             }
         }
@@ -80,23 +80,23 @@ public class InsertionSortController {
     private void start() {
         new Thread(() -> {
             Platform.runLater(() -> {
-                writeableArea.setText("Starting Bubble Sort");
+                writeableArea.setText("Starting Insertion Sort");
                 drawElements();
             });
             try {
                 Thread.sleep(1500);
             } catch (InterruptedException e) {
-                Platform.runLater(() -> ErrorMessage.showErrorMessage(bubble_screen, stage, "Error Starting", String.valueOf(e)));
+                Platform.runLater(() -> ErrorMessage.showErrorMessage(insertion_screen, stage, "Error Starting", String.valueOf(e)));
                 return;
             }
             for (int i = 0; i < elements.size() - 1; i++) {
-                for (int j = 0; j < elements.size() - 1 - i; j++) {
-                    if (elements.get(j) > elements.get(j + 1)) {
+                for (int j = i + 1; j > 0; j--) {
+                    if (elements.get(j) < elements.get(j - 1)) {
                         int firstValue = elements.get(j);
-                        int secondValue = elements.get(j + 1);
+                        int secondValue = elements.get(j - 1);
                         int temp = firstValue;
                         elements.set(j, secondValue);
-                        elements.set(j + 1, temp);
+                        elements.set(j - 1, temp);
                         Platform.runLater(() -> writeableArea.setText("Swapped " + firstValue + " with " + secondValue));
                     } else {
                         int finalJ = j;
@@ -107,7 +107,7 @@ public class InsertionSortController {
                     try {
                         Thread.sleep(1500);
                     } catch (InterruptedException e) {
-                        Platform.runLater(() -> ErrorMessage.showErrorMessage(bubble_screen, stage, "Thread Error", String.valueOf(e)));
+                        Platform.runLater(() -> ErrorMessage.showErrorMessage(insertion_screen, stage, "Thread Error", String.valueOf(e)));
                         return;
                     }
                 }
@@ -117,7 +117,9 @@ public class InsertionSortController {
     }
 
     private void drawElements() {
-        bubble_panel.getChildren().clear();
+
+        insertion_panel.getChildren().clear();
+
         for (int i = 0; i < elements.size(); i++) {
             int value = elements.get(i);
             StackPane node = new StackPane();
@@ -131,13 +133,13 @@ public class InsertionSortController {
             node.getChildren().addAll(rectangle, number);
             node.setLayoutX(450 + (i * (NODE_WIDTH + 10)));
             node.setLayoutY(300);
-            bubble_panel.getChildren().add(node);
+            insertion_panel.getChildren().add(node);
         }
     }
 
     @FXML
     private void onResetClick() {
-        bubble_panel.getChildren().clear();
+        insertion_panel.getChildren().clear();
         elements = new ArrayList<>();
         writeableArea.setText("");
     }
@@ -147,7 +149,7 @@ public class InsertionSortController {
         try {
             SceneSwitcher.backAlgorithms(e, stage);
         } catch (IOException ex) {
-            ErrorMessage.showErrorMessage(bubble_screen, stage, "Error Backing", String.valueOf(ex));
+            ErrorMessage.showErrorMessage(insertion_screen, stage, "Error Backing", String.valueOf(ex));
         }
     }
 }
