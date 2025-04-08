@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Application extends javafx.application.Application {
 
@@ -19,16 +20,25 @@ public class Application extends javafx.application.Application {
     //COMPLETED DATA STRUCTURE SECTION
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/com/visualiser/GUI/main_menu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("DSA Visualiser");
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-        stage.setResizable(true);
-        stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("esc"));
-        stage.setFullScreenExitHint("");
-        stage.show();
+    public void start(Stage stage) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/com/visualiser/GUI/main_menu.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            scene.getStylesheets().add(Application.class.getResource("/com/visualiser/stylesheets/menu.css").toExternalForm());
+            stage.setTitle("DSA Visualiser");
+            stage.setScene(scene);
+            stage.setFullScreen(true);
+            stage.setResizable(true);
+            stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("esc"));
+            stage.setFullScreenExitHint("");
+            stage.show();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            System.exit(0);
+        }
+
     }
 
     public static void main(String[] args) {
