@@ -23,8 +23,8 @@ public class AlgorithmsChooseScreenController {
     }
 
     @FXML
-    private void onSelectionSortClick(ActionEvent e) {
-
+    private void onSelectionSortClick(ActionEvent e) throws IOException {
+        SceneSwitcher.switch_scene(e, stage, "/com/visualiser/GUI/selection_sort.fxml");
     }
 
     @FXML

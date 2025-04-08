@@ -44,7 +44,9 @@ public class BubbleSortController {
 
     @FXML
     private void onNumberOfElementsClick() {
-        Integer numOfElements;
+
+        Integer numOfElements = null;
+        
         try {
             numOfElements = Integer.parseInt(elementsNumberField.getText());
         } catch (Exception e) {
