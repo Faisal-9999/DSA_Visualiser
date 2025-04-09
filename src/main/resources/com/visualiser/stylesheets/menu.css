@@ -1,0 +1,17 @@
+#main_screen {
+    -fx-background-color: #F5F5F5;
+}
+
+.button {
+    -fx-border-color: 'black';
+    -fx-font-family: 'Roboto';
+    -fx-font-size: 16;
+    -fx-pref-width: 75px;
+    -fx-text-fill: #333333;
+    -fx-pref-height: 35px;
+    -fx-padding: 1px;
+}
+
+.Label {
+   -fx-text-fill: #333333;
+}

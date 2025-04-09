@@ -3,10 +3,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.menus.DataStructureAndalgorithmChooseScreenController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/DSandAlgorithmChoose.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.menus.DataStructureAndalgorithmChooseScreenController">
    <children>
-      <Button layoutX="94.0" layoutY="187.0" mnemonicParsing="false" onAction="#onDataStructuresClick" text="Data Structures" />
-      <Button layoutX="413.0" layoutY="187.0" mnemonicParsing="false" onAction="#onAlgorithmsClick" text="Algorithms" />
-      <Button layoutX="25.0" layoutY="360.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" />
+      <Button layoutX="94.0" layoutY="187.0" mnemonicParsing="false" onAction="#onDataStructuresClick" text="Data Structures" AnchorPane.bottomAnchor="400.0" AnchorPane.rightAnchor="400.0" />
+      <Button layoutX="411.0" layoutY="187.0" mnemonicParsing="false" onAction="#onAlgorithmsClick" prefHeight="26.0" prefWidth="94.0" text="Algorithms" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="411.0" />
+      <Button layoutX="25.0" layoutY="360.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="25.0" />
    </children>
 </AnchorPane>

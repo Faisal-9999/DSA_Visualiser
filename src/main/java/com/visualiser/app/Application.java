@@ -5,9 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Objects;
-
 public class Application extends javafx.application.Application {
 
     //COMPLETED MAIN MENU SCREEN
@@ -25,7 +22,6 @@ public class Application extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/com/visualiser/GUI/main_menu.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            scene.getStylesheets().add(Application.class.getResource("/com/visualiser/stylesheets/menu.css").toExternalForm());
             stage.setTitle("DSA Visualiser");
             stage.setScene(scene);
             stage.setFullScreen(true);
