@@ -3,11 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.menus.AlgorithmsChooseScreenController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/AlgorithmChooseScreen.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.menus.AlgorithmsChooseScreenController">
    <children>
-      <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" />
-      <Button layoutX="480.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSelectionSortClick" text="Selection Sort" />
-      <Button layoutX="258.0" layoutY="98.0" mnemonicParsing="false" onAction="#onInsertionSortClick" text="Insertion Sort" />
-      <Button layoutX="54.0" layoutY="200.0" mnemonicParsing="false" onAction="#onBubbleSortClick" text="Bubble Sort" />
+      <Button layoutX="14.0" layoutY="351.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+      <Button layoutX="480.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSelectionSortClick" text="Selection Sort" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="950.0" />
+      <Button layoutX="258.0" layoutY="98.0" mnemonicParsing="false" onAction="#onInsertionSortClick" text="Insertion Sort" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="600.0" />
+      <Button layoutX="54.0" layoutY="200.0" mnemonicParsing="false" onAction="#onBubbleSortClick" stylesheets="@../stylesheets/AlgorithmChooseScreen.css" text="Bubble Sort" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="250.0" />
    </children>
 </AnchorPane>
