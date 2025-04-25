@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="bubble_screen" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.algorithms.BubbleSortController">
+<AnchorPane fx:id="bubble_screen" prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/bubble.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.algorithms.BubbleSortController">
    <children>
       <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
       <Button layoutX="526.0" layoutY="360.0" mnemonicParsing="false" onAction="#onResetClick" text="Reset" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="22.0" />
-      <Button layoutX="129.0" layoutY="319.0" mnemonicParsing="false" onAction="#onNumberOfElementsClick" text="Number Of Elements" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="324.0" />
-      <TextField fx:id="elementsNumberField" layoutX="291.0" layoutY="319.0" prefHeight="26.0" prefWidth="83.0" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="226.0" />
-      <AnchorPane fx:id="bubble_panel" layoutX="6.0" layoutY="55.0" prefHeight="254.0" prefWidth="587.0" />
-      <Label fx:id="writeableArea" layoutX="85.0" layoutY="23.0" prefHeight="26.0" prefWidth="413.0" textAlignment="CENTER" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="102.0" AnchorPane.topAnchor="23.0">
+      <Button layoutX="208.0" layoutY="332.0" mnemonicParsing="false" onAction="#onNumberOfElementsClick" text="Number Of Elements" AnchorPane.bottomAnchor="42.0" AnchorPane.rightAnchor="420.0" />
+      <TextField fx:id="elementsNumberField" layoutX="375.0" layoutY="332.0" prefHeight="26.0" prefWidth="83.0" AnchorPane.bottomAnchor="42.0" AnchorPane.rightAnchor="309.0" />
+      <AnchorPane fx:id="bubble_panel" layoutX="6.0" layoutY="45.0" prefHeight="264.0" prefWidth="761.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
+      <Label fx:id="writeableArea" layoutX="93.0" layoutY="14.0" prefHeight="26.0" prefWidth="413.0" textAlignment="CENTER" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="19.0" />
          </font>

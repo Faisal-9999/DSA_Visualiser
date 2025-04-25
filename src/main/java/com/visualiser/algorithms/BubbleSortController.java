@@ -30,6 +30,14 @@ public class BubbleSortController {
     @FXML
     private Stage stage;
 
+    //TODO: ADD i icon and THE HIDDEN TEXT ONCE HOVERED OVER IT
+
+    @FXML
+    private Label icon;
+
+    @FXML
+    private Label infoText;
+
     @FXML
     private AnchorPane bubble_screen;
 
