@@ -12,11 +12,24 @@
       <Button layoutX="526.0" layoutY="360.0" mnemonicParsing="false" onAction="#onResetClick" text="Reset" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="22.0" />
       <Button layoutX="208.0" layoutY="332.0" mnemonicParsing="false" onAction="#onNumberOfElementsClick" text="Number Of Elements" AnchorPane.bottomAnchor="42.0" AnchorPane.rightAnchor="420.0" />
       <TextField fx:id="elementsNumberField" layoutX="375.0" layoutY="332.0" prefHeight="26.0" prefWidth="83.0" AnchorPane.bottomAnchor="42.0" AnchorPane.rightAnchor="309.0" />
-      <AnchorPane fx:id="bubble_panel" layoutX="6.0" layoutY="45.0" prefHeight="264.0" prefWidth="761.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
+      <AnchorPane fx:id="bubble_panel" layoutX="6.0" layoutY="45.0" prefHeight="264.0" prefWidth="761.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label fx:id="timeText" layoutX="404.0" layoutY="9.0" prefHeight="39.0" prefWidth="176.0" text="Time Complexity: O(N²)" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="7.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="spaceText" layoutX="402.0" layoutY="59.0" prefHeight="39.0" prefWidth="176.0" text="Space Complexity: O(1)" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="57.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
       <Label fx:id="writeableArea" layoutX="93.0" layoutY="14.0" prefHeight="26.0" prefWidth="413.0" textAlignment="CENTER" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="19.0" />
          </font>
       </Label>
+      <Label fx:id="icon" layoutX="539.0" layoutY="19.0" prefHeight="18.0" prefWidth="47.0" text="      i     " textFill="#9e9898" AnchorPane.rightAnchor="14.0" />
    </children>
 </AnchorPane>

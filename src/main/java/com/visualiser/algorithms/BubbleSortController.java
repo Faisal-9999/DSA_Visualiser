@@ -30,13 +30,16 @@ public class BubbleSortController {
     @FXML
     private Stage stage;
 
-    //TODO: ADD i icon and THE HIDDEN TEXT ONCE HOVERED OVER IT
+    //TODO: MAKE ALL UI CHANGES ADDED TO BUBBLESORT to insertion sort as well as selection sort
 
     @FXML
     private Label icon;
 
     @FXML
-    private Label infoText;
+    private Label spaceText;
+
+    @FXML
+    private Label timeText;
 
     @FXML
     private AnchorPane bubble_screen;
@@ -49,6 +52,21 @@ public class BubbleSortController {
 
     @FXML
     private Label writeableArea;
+
+    public void initialize() {
+        spaceText.setVisible(false);
+        timeText.setVisible(false);
+
+        icon.setOnMouseEntered(e -> {
+            timeText.setVisible(true);
+            spaceText.setVisible(true);
+        });
+
+        icon.setOnMouseExited(event -> {
+            timeText.setVisible(false);
+            spaceText.setVisible(false);
+        });
+    }
 
     @FXML
     private void onNumberOfElementsClick() {
