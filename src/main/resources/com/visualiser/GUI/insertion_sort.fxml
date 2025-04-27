@@ -14,12 +14,12 @@
         <TextField fx:id="elementsNumberField" layoutX="291.0" layoutY="319.0" prefHeight="26.0" prefWidth="83.0" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="226.0" />
         <AnchorPane fx:id="insertion_panel" layoutX="6.0" layoutY="55.0" prefHeight="254.0" prefWidth="587.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
          <children>
-            <Label fx:id="spaceText" layoutX="372.0" layoutY="57.0" prefHeight="39.0" prefWidth="176.0" text="Space Complexity: O(1)">
+            <Label fx:id="spaceText" layoutX="372.0" layoutY="57.0" prefHeight="39.0" prefWidth="176.0" text="Space Complexity: O(1)" AnchorPane.rightAnchor="32.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="timeText" layoutX="372.0" layoutY="18.0" prefHeight="39.0" prefWidth="176.0" text="Time Complexity: O(N²)">
+            <Label fx:id="timeText" layoutX="372.0" layoutY="18.0" prefHeight="39.0" prefWidth="176.0" text="Time Complexity: O(N²)" AnchorPane.rightAnchor="32.0">
                <font>
                   <Font size="14.0" />
                </font>
