@@ -40,9 +40,35 @@ public class InsertionSortController {
     private TextField elementsNumberField;
 
     @FXML
+    private Label icon;
+
+    @FXML
+    private Label spaceText;
+
+    @FXML
+    private Label timeText;
+
+
+    @FXML
     private Label writeableArea;
 
     //TODO: MAKE CHANGES TO THE SORTING ALGORITHM TO MATCH INSERTION SORT
+
+    public void initialize() {
+        spaceText.setVisible(false);
+        timeText.setVisible(false);
+
+        icon.setOnMouseEntered(e -> {
+            timeText.setVisible(true);
+            spaceText.setVisible(true);
+        });
+
+        icon.setOnMouseExited(event -> {
+            timeText.setVisible(false);
+            spaceText.setVisible(false);
+        });
+    }
+
 
     @FXML
     private void onNumberOfElementsClick() {
@@ -54,6 +80,12 @@ public class InsertionSortController {
             ErrorMessage.showErrorMessage(insertion_screen, stage, "Invalid Data Type", "Argument can only be an integer");
             return;
         }
+
+        if (numOfElements > 10 || numOfElements <= 0) {
+            ErrorMessage.showErrorMessage(insertion_screen, stage, "Invalid Number Of Elements", "Number of elements can only be from 1 - 10");
+            return;
+        }
+
         elements = new ArrayList<>();
         for (int i = 0; i < numOfElements; i++) {
             boolean validInput = false;

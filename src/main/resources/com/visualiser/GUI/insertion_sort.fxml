@@ -6,17 +6,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="insertion_screen" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.algorithms.InsertionSortController">
+<AnchorPane fx:id="insertion_screen" prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/insertion.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.visualiser.algorithms.InsertionSortController">
     <children>
         <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#onBackClick" text="Back" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
         <Button layoutX="526.0" layoutY="360.0" mnemonicParsing="false" onAction="#onResetClick" text="Reset" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="22.0" />
         <Button layoutX="129.0" layoutY="319.0" mnemonicParsing="false" onAction="#onNumberOfElementsClick" text="Number Of Elements" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="324.0" />
         <TextField fx:id="elementsNumberField" layoutX="291.0" layoutY="319.0" prefHeight="26.0" prefWidth="83.0" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="226.0" />
-        <AnchorPane fx:id="insertion_panel" layoutX="6.0" layoutY="55.0" prefHeight="254.0" prefWidth="587.0" />
+        <AnchorPane fx:id="insertion_panel" layoutX="6.0" layoutY="55.0" prefHeight="254.0" prefWidth="587.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label fx:id="spaceText" layoutX="372.0" layoutY="57.0" prefHeight="39.0" prefWidth="176.0" text="Space Complexity: O(1)">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="timeText" layoutX="372.0" layoutY="18.0" prefHeight="39.0" prefWidth="176.0" text="Time Complexity: O(N²)">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
         <Label fx:id="writeableArea" layoutX="85.0" layoutY="23.0" prefHeight="26.0" prefWidth="413.0" textAlignment="CENTER" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="102.0" AnchorPane.topAnchor="23.0">
             <font>
                 <Font size="19.0" />
             </font>
         </Label>
+      <Label fx:id="icon" layoutX="543.0" layoutY="14.0" prefHeight="18.0" prefWidth="47.0" text="      i     " textFill="#9e9898" />
     </children>
 </AnchorPane>

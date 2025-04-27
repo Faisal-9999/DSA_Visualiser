@@ -40,17 +40,51 @@ public class SelectionSortController {
     private TextField elementsNumberField;
 
     @FXML
+    private Label icon;
+
+    @FXML
+    private Label spaceText;
+
+    @FXML
+    private Label timeText;
+
+
+    @FXML
     private Label writeableArea;
+
+    public void initialize() {
+        spaceText.setVisible(false);
+        timeText.setVisible(false);
+
+        icon.setOnMouseEntered(e -> {
+            timeText.setVisible(true);
+            spaceText.setVisible(true);
+        });
+
+        icon.setOnMouseExited(event -> {
+            timeText.setVisible(false);
+            spaceText.setVisible(false);
+        });
+    }
+
 
     @FXML
     private void onNumberOfElementsClick() {
-        Integer numOfElements;
+
+        Integer numOfElements = null;
+
         try {
             numOfElements = Integer.parseInt(elementsNumberField.getText());
         } catch (Exception e) {
             ErrorMessage.showErrorMessage(selection_screen, stage, "Invalid Data Type", "Argument can only be an integer");
             return;
         }
+
+        if (numOfElements > 10 || numOfElements <= 0) {
+            ErrorMessage.showErrorMessage(selection_screen, stage, "Invalid Number Of Elements", "Number of elements can only be from 1 - 10");
+            return;
+        }
+
         elements = new ArrayList<>();
         for (int i = 0; i < numOfElements; i++) {
             boolean validInput = false;

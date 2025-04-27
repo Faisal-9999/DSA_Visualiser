@@ -79,6 +79,12 @@ public class BubbleSortController {
             ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Data Type", "Argument can only be an integer");
             return;
         }
+
+        if (numOfElements > 10 || numOfElements <= 0) {
+            ErrorMessage.showErrorMessage(bubble_screen, stage, "Invalid Number Of Elements", "Number of elements can only be from 1 - 10");
+            return;
+        }
+
         elements = new ArrayList<>();
         for (int i = 0; i < numOfElements; i++) {
             boolean validInput = false;
